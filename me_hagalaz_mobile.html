@@ -40,6 +40,7 @@
 
 html {
   height: calc(100% + env(safe-area-inset-top));
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -57,6 +58,7 @@ body {
   overflow: hidden;
   user-select: none;
   -webkit-user-select: none;
+  -webkit-text-size-adjust: 100%;
 }
 
 /* ═══════════════════════════════════════════════════
@@ -720,7 +722,7 @@ body {
           <div class="history-title">Historie tahů</div>
           <div id="history-list" class="history-list">
             <!-- Filled dynamically -->
-            <div style="font-size:0.75rem; color:var(--tx-dm); font-style:italic;">Žádné tažené karty</div>
+            <div class="history-item" style="opacity: 0.25; cursor: default; pointer-events: none; border-style: dashed;">ŽÁDNÁ HISTORIE</div>
           </div>
         </div>
       </div>
@@ -2120,7 +2122,7 @@ body {
   function updateHistoryUI() {
     const list = document.getElementById('history-list');
     if (state.history.length === 0) {
-      list.innerHTML = `<div style="font-size:0.75rem; color:var(--tx-dm); font-style:italic;">Žádné tažené karty</div>`;
+      list.innerHTML = `<div class="history-item" style="opacity: 0.25; cursor: default; pointer-events: none; border-style: dashed;">ŽÁDNÁ HISTORIE</div>`;
       return;
     }
     
