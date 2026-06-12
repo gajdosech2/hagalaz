@@ -9,7 +9,7 @@
 <meta name="description" content="Digitální karty pro Mass Effect: Priority Hagalaz — karty tlaku a chování nepřátel.">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="icon.svg">
-<link rel="apple-touch-icon" href="icon.svg">
+<link rel="apple-touch-icon" href="icon.png">
 <style>
 /* ═══════════════════════════════════════════════════
    RESET, VARIABLES & UTILITIES
@@ -38,6 +38,10 @@
   --border-dim: rgba(255, 255, 255, 0.06);
 }
 
+html {
+  height: 100%;
+}
+
 body {
   background-color: var(--bg);
   background-image: 
@@ -48,7 +52,7 @@ body {
   color: var(--tx);
   font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif;
   height: 100vh;
-  height: -webkit-fill-available;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
