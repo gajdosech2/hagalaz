@@ -301,7 +301,7 @@ body {
   padding: 2px 0;
   width: 100%;
   scrollbar-width: none;
-  min-height: 30px;
+  height: 36px;
   align-items: center;
 }
 
@@ -2070,6 +2070,7 @@ body {
     updateDeckUI();
     renderPressureCardSlot();
     updateHistoryUI();
+    resizePressureCard();
 
     // Trigger CSS animation by toggling class on card
     const cardEl = document.querySelector('#pressure-card-slot .card');
