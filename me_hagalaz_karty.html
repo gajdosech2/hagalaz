@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mass Effect: Priority Hagalaz — Herní Karty</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════
+   RESET & ROOT
+═══════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+:root{
+  color-scheme: dark;
+  --W:2.5in; --H:3.5in; --R:7px;
+  --bg:#040810;
+  --card-bg:#050d1a;
+  /* Cerberus */
+  --ce:#e84800; --ce-dk:#5c1c00; --ce-md:#a03000;
+  /* Reaper */
+  --re:#7722cc; --re-dk:#2e0e5a; --re-md:#5018a0;
+  /* Pressure */
+  --pr:#ff9a00; --pr-dk:#4e2800; --pr-md:#944800;
+  /* UI */
+  --ax:#00cfff;
+  --tx:#b8d4f0; --tx-hi:#e0f2ff; --tx-dm:#3a5a78;
+  --border-dim:rgba(255,255,255,0.06);
+}
+
+html,body{background:#050810;font-family:'Rajdhani','Segoe UI',sans-serif;color:var(--tx)}
+
+/* ═══════════════════════════════════════════════════
+   SCREEN-ONLY INFO PANEL
+═══════════════════════════════════════════════════ */
+.info-panel{
+  background:#0a1828;border-bottom:2px solid var(--ax);
+  padding:18px 28px;margin-bottom:24px;
+}
+.info-panel h1{
+  font-family:'Orbitron',sans-serif;color:var(--ax);
+  font-size:1.1rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;
+}
+.info-panel p{font-size:.85rem;line-height:1.6;max-width:70ch;color:var(--tx)}
+.info-panel .tips{
+  margin-top:12px;display:flex;gap:12px;flex-wrap:wrap;
+}
+.info-panel .tip{
+  background:rgba(0,207,255,.06);border:1px solid rgba(0,207,255,.15);
+  border-radius:4px;padding:8px 14px;font-size:.78rem;line-height:1.5;
+  flex:1;min-width:220px;
+}
+.info-panel .tip strong{color:var(--ax);font-family:'Orbitron',sans-serif;font-size:.68rem}
+.sec-title{
+  font-family:'Orbitron',sans-serif;font-size:.72rem;color:var(--ax);
+  padding:14px 28px 6px;letter-spacing:.2em;text-transform:uppercase;opacity:.55;
+}
+@media print{.info-panel,.sec-title{display:none !important}}
+
+/* ═══════════════════════════════════════════════════
+   PRINT PAGE
+═══════════════════════════════════════════════════ */
+.page{
+  width:8.5in;min-height:11in;margin:0 auto 28px;padding:.28in;
+  background:#06080e;display:flex;flex-wrap:wrap;
+  gap:.09in;align-content:flex-start;
+}
+@media print{
+  .page{
+    background:white !important;margin:0;padding:.22in;
+    page-break-after:always;break-after:page;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   BASE CARD
+═══════════════════════════════════════════════════ */
+.card{
+  width:var(--W);height:var(--H);border-radius:var(--R);
+  overflow:hidden;flex-shrink:0;display:flex;flex-direction:column;
+  position:relative;font-size:10.5pt;
+}
+
+/* ═══════════════════════════════════════════════════
+   BEHAVIOR CARD FRONT
+═══════════════════════════════════════════════════ */
+.beh{background:var(--card-bg)}
+.beh.ce{border:1.5px solid var(--ce-dk)}
+.beh.re{border:1.5px solid var(--re-dk)}
+
+/* — header — */
+.beh-hdr{
+  height:.3in;display:flex;align-items:center;
+  padding:0 .09in;gap:5px;flex-shrink:0;
+}
+.ce .beh-hdr{
+  background:linear-gradient(90deg,#6e1e00,#2a0c00);
+  border-bottom:1.5px solid var(--ce);
+}
+.re .beh-hdr{
+  background:linear-gradient(90deg,#340e78,#150632);
+  border-bottom:1.5px solid var(--re);
+}
+.hdr-faction{
+  font-family:'Orbitron',sans-serif;font-size:.44em;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+}
+.ce .hdr-faction{color:#ff9966}
+.re .hdr-faction{color:#bb88ff}
+.hdr-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(255,255,255,.14),transparent)}
+.hdr-pips{display:flex;gap:2px}
+.pip{width:4px;height:4px;border-radius:50%;opacity:.55}
+.ce .pip{background:var(--ce)}
+.re .pip{background:var(--re)}
+
+/* — art — */
+.beh-art{flex-shrink:0;height:1.04in;overflow:hidden}
+.beh-art svg{width:100%;height:100%;display:block}
+
+/* — name — */
+.beh-nm{padding:.044in .09in .028in;border-bottom:1px solid var(--border-dim);flex-shrink:0}
+.beh-title{
+  font-family:'Orbitron',sans-serif;font-size:.82em;font-weight:700;
+  letter-spacing:.03em;text-transform:uppercase;line-height:1.1;
+}
+.ce .beh-title{color:#ff9966}
+.re .beh-title{color:#cc99ff}
+.beh-cat{font-size:.60em;letter-spacing:.16em;text-transform:uppercase;margin-top:2px;opacity:.4}
+.beh-keyword{
+  display:inline-block;font-family:'Orbitron',sans-serif;font-size:.54em;
+  font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid currentColor;padding:1px 5px;border-radius:2px;
+  margin-top:3px;opacity:.85;
+}
+.ce .beh-keyword{color:#ff9966;border-color:#e84800}
+.re .beh-keyword{color:#cc99ff;border-color:#7722cc}
+
+/* — priorities — */
+.beh-pris{flex:1;padding:.04in .08in .03in;display:flex;flex-direction:column;gap:.03in;overflow:hidden}
+.pri-row{display:flex;gap:.052in;align-items:flex-start}
+.pri-num{
+  font-family:'Orbitron',sans-serif;font-size:.52em;font-weight:900;
+  min-width:.175in;height:.175in;display:flex;align-items:center;justify-content:center;
+  border-radius:2px;flex-shrink:0;margin-top:.008in;line-height:1;
+}
+.ce .pri-num{background:var(--ce);color:#fff}
+.re .pri-num{background:var(--re);color:#fff}
+.pri-txt{font-size:.72em;line-height:1.35;color:var(--tx)}
+
+/* — footer — */
+.beh-ftr{
+  height:.2in;display:flex;align-items:center;padding:0 .09in;
+  flex-shrink:0;border-top:1px solid var(--border-dim);
+}
+.ce .beh-ftr{background:rgba(46,12,0,.65)}
+.re .beh-ftr{background:rgba(14,6,32,.65)}
+.ftr-bar{flex:1;height:1px}
+.ce .ftr-bar{background:linear-gradient(90deg,var(--ce-dk),transparent)}
+.re .ftr-bar{background:linear-gradient(90deg,var(--re-dk),transparent)}
+.ftr-code{font-family:'Orbitron',sans-serif;font-size:.36em;opacity:.22;letter-spacing:.06em;color:var(--tx)}
+
+/* ═══════════════════════════════════════════════════
+   PRESSURE CARD FRONT
+═══════════════════════════════════════════════════ */
+.pres{background:var(--card-bg);border:1.5px solid var(--pr-dk)}
+
+.pres-hdr{
+  height:.28in;display:flex;align-items:center;padding:0 .09in;gap:5px;
+  flex-shrink:0;background:linear-gradient(90deg,#442200,#1c0e00);
+  border-bottom:1.5px solid var(--pr);
+}
+.pres-hdr-lbl{
+  font-family:'Orbitron',sans-serif;font-size:.44em;font-weight:700;
+  letter-spacing:.1em;color:#ffbb44;text-transform:uppercase;
+}
+.pres-hdr-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(255,154,0,.18),transparent)}
+.pres-hdr-sym{font-size:.75em;color:var(--pr);opacity:.7;line-height:1}
+
+.pres-art{flex-shrink:0;height:.9in;overflow:hidden}
+.pres-art svg{width:100%;height:100%;display:block}
+
+.pres-nm{padding:.04in .09in .025in;border-bottom:1px solid rgba(255,154,0,.12);flex-shrink:0}
+.pres-title{
+  font-family:'Orbitron',sans-serif;font-size:.76em;font-weight:700;
+  letter-spacing:.04em;color:#ffaa44;text-transform:uppercase;line-height:1.1;
+}
+.pres-sub{font-size:.56em;letter-spacing:.15em;text-transform:uppercase;color:var(--pr-dk);margin-top:2px}
+
+.pres-body{flex:1;padding:.05in .09in;font-size:.72em;line-height:1.38;color:var(--tx);overflow:hidden}
+
+.pres-timing{padding:.015in .09in .036in;display:flex;align-items:center;gap:4px;flex-shrink:0}
+.t-pill{
+  font-family:'Orbitron',sans-serif;font-size:.38em;letter-spacing:.06em;
+  color:var(--pr);border:1px solid var(--pr-dk);padding:1px 5px;border-radius:2px;
+}
+
+.pres-ftr{
+  height:.18in;display:flex;align-items:center;padding:0 .09in;
+  flex-shrink:0;border-top:1px solid rgba(255,154,0,.07);background:rgba(28,10,0,.6);
+}
+.pres-ftr-bar{flex:1;height:1px;background:linear-gradient(90deg,var(--pr-dk),transparent)}
+.pres-ftr-code{font-family:'Orbitron',sans-serif;font-size:.35em;opacity:.2;letter-spacing:.06em;color:var(--tx)}
+
+/* ═══════════════════════════════════════════════════
+   CARD BACKS
+═══════════════════════════════════════════════════ */
+.back{background:var(--card-bg);position:relative}
+.back-beh{border:1.5px solid #0e2a44}
+.back-pres{border:1.5px solid #3a1e00}
+.back svg{width:100%;height:100%;display:block}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     SCREEN INFO PANEL
+════════════════════════════════════════════════ -->
+<div class="info-panel">
+  <h1>⬡ Mass Effect: Priority Hagalaz — Herní Karty</h1>
+  <p>Sada karet pro rozšíření pravidel pro 1–2 hráče. Obsahuje <strong>5 karet chování nepřátel</strong> a <strong>20 karet tlaku</strong> (pro každou hru vyberte náhodných 6).</p>
+  <div class="tips">
+    <div class="tip"><strong>TISK</strong><br>Vytiskněte každou stránku samostatně. Strany s přední a zadní stranou karet jsou spárovány pro oboustranný tisk. Při otáčení listu překlopte podél dlouhé hrany.</div>
+    <div class="tip"><strong>ÚPRAVY</strong><br>Všechna data karet jsou v sekci <code>HERNÍ DATA</code> ve skriptu pod textem stránky. Změňte texty přímo tam – strukturu neměňte.</div>
+    <div class="tip"><strong>KARTY TLAKU</strong><br>Před každou misí zamíchejte všech 20 karet tlaku a náhodně vyberte 6. Tyto karty tvoří balíček tlaku na tuto misi.</div>
+  </div>
+</div>
+
+<!-- Pages injected by JS -->
+<div class="sec-title">CHOVÁNÍ NEPŘÁTEL — PŘEDNÍ STRANY (strana 1/2)</div>
+<div class="page" id="pg-beh-front"></div>
+
+<div class="sec-title">CHOVÁNÍ NEPŘÁTEL — ZADNÍ STRANY (strana 2/2)</div>
+<div class="page" id="pg-beh-back"></div>
+
+<div class="sec-title">KARTY TLAKU — PŘEDNÍ STRANY (strany 3–5)</div>
+<div id="pg-pres-front-container"></div>
+
+<div class="sec-title">KARTY TLAKU — ZADNÍ STRANY (strany 6–8)</div>
+<div id="pg-pres-back-container"></div>
+
+<!-- ═══════════════════════════════════════════════
+     JAVASCRIPT — DATA & RENDERING
+════════════════════════════════════════════════ -->
+<script>
+/* ════════════════════════════════════════════════════════════════
+   ██████╗  █████╗ ████████╗ █████╗
+   ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗
+   ██║  ██║███████║   ██║   ███████║
+   ██║  ██║██╔══██║   ██║   ██╔══██║
+   ██████╔╝██║  ██║   ██║   ██║  ██║
+   ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝
+
+   ══════════════════════════════════════════════
+   HERNÍ DATA — ZDE UPRAVUJTE OBSAH KARET
+   ══════════════════════════════════════════════
+   Každá karta je objekt s těmito poli:
+     id       – unikátní identifikátor (neměnit)
+     type     – 'cerberus' nebo 'reaper' (pro barvy)
+     faction  – text v záhlaví (velká písmena)
+     name     – název karty
+     category – podtitulek (typ jednotky)
+     artKey   – klíč SVG obrázku (viz funkce art() níže)
+     priorities – pole 3 textů priorit
+     code     – kód v zápatí
+
+   Pro karty tlaku:
+     name     – název události
+     subtype  – kategorie události
+     artKey   – klíč SVG obrázku
+     text     – popis efektu
+     timing   – kdy se aktivuje ('OKAMŽITĚ', 'DO KONCE KOLA' atd.)
+     code     – kód v zápatí
+══════════════════════════════════════════════════════════════════ */
+
+/* ────────────────────────────────────────────────
+   KARTY CHOVÁNÍ NEPŘÁTEL
+──────────────────────────────────────────────── */
+const BEHAVIOR_CARDS = [
+  {
+    id: 'engineer',
+    type: 'cerberus',
+    faction: 'CERBERUS',
+    name: 'Inženýr',
+    category: 'Podpůrná jednotka',
+    keyword: 'Střelec',
+    artKey: 'engineer',
+    priorities: [
+      'Pokud sousedí s postavou hráče, přesune se o 2 pole pryč a zaútočí na dálku.',
+      'Pokud má přímý výhled na postavu hráče, zůstane na místě a zaútočí na dálku.',
+      'Přesune se směrem k nejbližší spojenecké jednotce, aby ji kryl zezadu.'
+    ],
+    code: 'CRB-ENG-01'
+  },
+  {
+    id: 'guardian',
+    type: 'cerberus',
+    faction: 'CERBERUS',
+    name: 'Obránce',
+    category: 'Obranná jednotka',
+    keyword: 'Chytač',
+    artKey: 'guardian',
+    priorities: [
+      'Pokud sousedí s postavou hráče, zaútočí na ni. Do konce kola jej nelze schopnostmi hráčů odtlačit ani jinak přesunout.',
+      'Pokud se nachází v cestě k cíli mise, zůstane na místě a sníží své první utržené poškození v tomto kole o 1.',
+      'Přesune se nejkratší cestou tak, aby blokoval přístup k nejbližšímu cíli mise.'
+    ],
+    code: 'CRB-GRD-01'
+  },
+  {
+    id: 'trooper',
+    type: 'cerberus',
+    faction: 'CERBERUS',
+    name: 'Voják',
+    category: 'Útočná jednotka',
+    keyword: 'Běžec',
+    artKey: 'trooper',
+    priorities: [
+      'Pokud sousedí s postavou hráče, zaútočí na ni. Pokud cíl sousedí s dalším nepřítelem, získá Voják +1 k poškození.',
+      'Pokud nesousedí s postavou hráče, využije vlastnost Běžec (pohyb o 4 pole) a přesune se k cíli s nejméně štíty.',
+      'Přesune se na pozici poskytující krytí (pole sousedící s překážkou nebo zdí).'
+    ],
+    code: 'CRB-TRP-01'
+  },
+  {
+    id: 'husk',
+    type: 'reaper',
+    faction: 'SMRŤÁCI',
+    name: 'Přetvořenec',
+    category: 'Útočná jednotka',
+    keyword: 'Mstitel',
+    artKey: 'husk',
+    priorities: [
+      'Pokud sousedí s postavou hráče, zaútočí na ni.',
+      'Pokud jiný Přetvořenec již sousedí s postavou hráče, přesune se k této postavě, aby ji obklíčil.',
+      'Bezmyšlenkovitě se přesune k nejbližší postavě hráče nejkratší možnou cestou.'
+    ],
+    code: 'REP-HSK-01'
+  },
+  {
+    id: 'ravager',
+    type: 'reaper',
+    faction: 'SMRŤÁCI',
+    name: 'Záškodník',
+    category: 'Dálková jednotka',
+    keyword: 'Střelec',
+    artKey: 'cannibal',
+    priorities: [
+      'Pokud sousedí s postavou hráče, zanechá za sebou toxickou stopu (1 poškození všem na sousedních polích) a ustoupí o 2 pole.',
+      'Pokud má přímý výhled na postavu hráče, zůstane na místě a zaútočí na dálku.',
+      'Přesune se tak, aby získal přímý výhled na nejbližší postavu hráče.'
+    ],
+    code: 'REP-RVG-01'
+  },
+  {
+    id: 'cannibal',
+    type: 'reaper',
+    faction: 'SMRŤÁCI',
+    name: 'Kanibal',
+    category: 'Útočná jednotka',
+    keyword: 'Běžec',
+    artKey: 'ravager',
+    priorities: [
+      'Pokud sousedí s postavou hráče, zaútočí na ni. Pokud při tom ubere životy, Kanibal se vyléčí z 1 poškození.',
+      'Pokud je některá postava hráče zraněná (chybí jí životy), využije vlastnost Běžec k co nejrychlejšímu přesunu k ní.',
+      'Přesune se k nejbližší postavě hráče.'
+    ],
+    code: 'REP-CAN-01'
+  }
+];
+
+/* ────────────────────────────────────────────────
+   KARTY TLAKU (20 karet – pro každou misi vyberte 6)
+──────────────────────────────────────────────── */
+const PRESSURE_CARDS = [
+  {
+    id: 'reinforcements',
+    name: 'NEPŘÁTELSKÉ POSILY',
+    subtype: 'Posílení',
+    artKey: 'spawn',
+    text: 'Nepřítel vysílá zálohy. Přivolej 2 nepřátele na dvě místa nasazení, která jsou nejdále od aktuální postavy hráče.',
+    timing: 'OKAMŽITĚ',
+    code: 'TLAK-01'
+  },
+  {
+    id: 'lockdown',
+    name: 'NOUZOVÉ UZAMČENÍ',
+    subtype: 'Prostředí',
+    artKey: 'lock',
+    text: 'Systémy uzamkly průchody. Všechny odemčené dveře se na mapě okamžitě zamknou.',
+    timing: 'OKAMŽITĚ',
+    code: 'TLAK-02'
+  },
+  {
+    id: 'power-reroute',
+    name: 'PŘESMĚROVÁNÍ ENERGIE',
+    subtype: 'Technické selhání',
+    artKey: 'power',
+    text: 'Nepřítel přesměroval energii do zbraňových systémů. Všechny útoky nepřátel na dálku způsobují +1 poškození do konce tohoto kola.',
+    timing: 'DO KONCE KOLA',
+    code: 'TLAK-03'
+  },
+  {
+    id: 'structural-collapse',
+    name: 'STRUKTURÁLNÍ KOLAPS',
+    subtype: 'Prostředí',
+    artKey: 'collapse',
+    text: 'Paluba se hroutí pod náporem bouře. Každé inferno pole se rozšíří o 1 sousední pole na zbytek mise.',
+    timing: 'TRVALÉ',
+    code: 'TLAK-04'
+  },
+  {
+    id: 'comms-blackout',
+    name: 'VÝPADEK KOMUNIKACE',
+    subtype: 'Rušení signálu',
+    artKey: 'signal',
+    text: 'Signál je silně rušen. Žádné schopnosti nemohou cílit na jiné postavy hráče do konce tohoto kola.',
+    timing: 'DO KONCE KOLA',
+    code: 'TLAK-05'
+  },
+  {
+    id: 'enemy-surge',
+    name: 'ZDRCUJÍCÍ VLNA',
+    subtype: 'Taktický postup',
+    artKey: 'wave',
+    text: 'Nepřátelské řady se nezadržitelně valí vpřed. Každý nepřítel na mapě se okamžitě přesune o 1 pole ve směru k nejbližší postavě hráče.',
+    timing: 'OKAMŽITĚ',
+    code: 'TLAK-06'
+  },
+  {
+    id: 'combat-protocol',
+    name: 'BOJOVÝ PROTOKOL',
+    subtype: 'Taktická podpora',
+    artKey: 'protocol',
+    text: 'Nepřítel aktivoval nouzové protokoly. Všichni nepřátelé jsou imunní vůči omráčení do konce tohoto kola.',
+    timing: 'DO KONCE KOLA',
+    code: 'TLAK-07'
+  },
+  {
+    id: 'shield-failure',
+    name: 'SELHÁNÍ ŠTÍTŮ',
+    subtype: 'Elektromagnetický výbuch',
+    artKey: 'shieldfail',
+    text: 'Elektromagnetický výbuch narušil ochranu. Každá postava hráče okamžitě ztratí 1 bod štítu.',
+    timing: 'OKAMŽITĚ',
+    code: 'TLAK-08'
+  },
+  {
+    id: 'backup-units',
+    name: 'ZÁLOŽNÍ JEDNOTKY',
+    subtype: 'Posílení',
+    artKey: 'spawn',
+    text: 'Zálohy zaujaly pozice. Přivolej 1 nepřítele na každé prázdné místo nasazení. Pokud žádné volné není, nic se nestane.',
+    timing: 'OKAMŽITĚ',
+    code: 'TLAK-09'
+  },
+  {
+    id: 'system-collapse',
+    name: 'SYSTÉMOVÝ KOLAPS',
+    subtype: 'Technické selhání',
+    artKey: 'system',
+    text: 'Technická selhání paralyzují vybavení. Všechny postavy hráče mohou v tomto kole využít pouze 2 strategické kostky (akce) místo obvyklých 3.',
+    timing: 'DO KONCE KOLA',
+    code: 'TLAK-10'
+  },
+  {
+    id: 'pressure-waves',
+    name: 'TLAKOVÉ VLNY',
+    subtype: 'Prostředí',
+    artKey: 'wave',
+    text: 'Výbuch potrubí otřásá lodí. Každá postava hráče v inferno poli utrpí 2 poškození místo 1 při vstupu i na začátku kola.',
+    timing: 'DO KONCE KOLA',
+    code: 'TLAK-11'
+  },
+  {
+    id: 'elite-threat',
+    name: 'ELITNÍ HROZBA',
+    subtype: 'Zvýšené nebezpečí',
+    artKey: 'elite',
+    text: 'Do bitvy se zapojil obávaný protivník. Umísti jednoho elitního nepřítele na nejbližší prázdné místo nasazení.',
+    timing: 'OKAMŽITĚ',
+    code: 'TLAK-12'
+  },
+  {
+    id: 'magnetic-storm',
+    name: 'MAGNETICKÁ BOUŘE',
+    subtype: 'Planetární bouře',
+    artKey: 'storm',
+    text: 'Hagalazská bouře zasahuje trup lodi. Všechny postavy hráče mají o 1 pohybový bod méně do konce tohoto kola.',
+    timing: 'DO KONCE KOLA',
+    code: 'TLAK-13'
+  },
+  {
+    id: 'alarm',
+    name: 'POPLACH',
+    subtype: 'Bezpečnostní alarm',
+    artKey: 'alarm',
+    text: 'Alarm odhalil polohu týmu. Všichni nepřátelé se okamžitě aktivují. Útočí, pokud mohou, jinak postupují vpřed.',
+    timing: 'OKAMŽITĚ',
+    code: 'TLAK-14'
+  },
+  {
+    id: 'critical-situation',
+    name: 'KRITICKÁ SITUACE',
+    subtype: 'Taktická hrozba',
+    artKey: 'danger',
+    text: 'Nepřítel cílí na raněné. První postava hráče, která utrpí poškození v tomto kole, nemůže být vyléčena do konce kola.',
+    timing: 'DO KONCE KOLA',
+    code: 'TLAK-15'
+  },
+  {
+    id: 'emergency-power',
+    name: 'ZÁLOŽNÍ VÝZBROJ',
+    subtype: 'Taktická výhoda',
+    artKey: 'power',
+    text: 'Nepřátelé odjistili nebezpečné záložní zbraně. První útok, který v tomto kole jakýkoliv nepřítel úspěšně provede, způsobí dvojnásobné poškození.',
+    timing: 'DO KONCE KOLA',
+    code: 'TLAK-16'
+  },
+  {
+    id: 'toxic-environment',
+    name: 'TOXICKÉ VÝPARY',
+    subtype: 'Zamoření lodi',
+    artKey: 'bio',
+    text: 'Hustý toxický plyn zamořil oblast a výrazně omezil viditelnost. Všechny postavy hráče mají po dobu tohoto kola zkrácené palbné pole na maximálně 2 pole.',
+    timing: 'DO KONCE KOLA',
+    code: 'TLAK-17'
+  },
+  {
+    id: 'kinetic-barriers',
+    name: 'KINETICKÉ BARIÉRY',
+    subtype: 'Obranné vylepšení',
+    artKey: 'protocol',
+    text: 'Nepřátelé aktivovali vylepšené štítové generátory. Všichni nepřátelé získávají +1 k hodnotě svého štítu do konce tohoto kola.',
+    timing: 'DO KONCE KOLA',
+    code: 'TLAK-18'
+  },
+  {
+    id: 'coolant-leak',
+    name: 'NEBEZPEČNÝ ÚNIK',
+    subtype: 'Selhání prostředí',
+    artKey: 'leak',
+    text: 'Chladivo vytéká z poškozeného potrubí. Umísti 2 tokeny Úniku Chladiva na prázdná pole do vzdálenosti 3 polí od aktuální postavy hráče.',
+    timing: 'OKAMŽITĚ',
+    code: 'TLAK-19'
+  },
+  {
+    id: 'cover-fire',
+    name: 'KRYCÍ PALBA',
+    subtype: 'Taktická koordinace',
+    artKey: 'alarm',
+    text: 'Nepřátelé koordinují masivní palbu. Každá postava hráče, která se během svého tahu nepřesune alespoň o 1 pole, utrpí 1 poškození na konci svého tahu.',
+    timing: 'DO KONCE KOLA',
+    code: 'TLAK-20'
+  }
+];
+
+/* ════════════════════════════════════════════════════════════════
+   SVG ART FUNCTIONS
+   Každá funkce vrací SVG string pro oblast karty.
+   Parametry: (w, h, idx) — idx je index karty (pro unikátní ID gradientů)
+════════════════════════════════════════════════════════════════ */
+const ART = {
+
+  engineer(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="eg${i}a" cx="50%" cy="50%">
+    <stop offset="0%" stop-color="#2a0800"/><stop offset="100%" stop-color="#060200"/>
+  </radialGradient>
+  <filter color-interpolation-filters="sRGB" id="eg${i}glow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#eg${i}a)"/>
+<!-- circuit traces -->
+<g stroke="#e84800" stroke-width="0.6" opacity="0.2" fill="none">
+  <path d="M0,${h*.3} h${w*.22} l12,12 h${w*.18}"/>
+  <path d="M${w},${h*.25} h-${w*.2} l-10,10 h-${w*.15}"/>
+  <path d="M${w*.35},0 v${h*.25} l8,8 v${h*.2}"/>
+  <path d="M${w*.65},${h} v-${h*.28} l-8,-8 v-${h*.18}"/>
+  <circle cx="${w*.35+8}" cy="${h*.25+8}" r="3.5" fill="#e84800" opacity="0.4"/>
+  <circle cx="${w*.65-8}" cy="${h*.72-8}" r="3.5" fill="#e84800" opacity="0.4"/>
+  <circle cx="${w*.41}" cy="${h*.53}" r="2.5" fill="#e84800" opacity="0.3"/>
+  <circle cx="${w*.59}" cy="${h*.47}" r="2.5" fill="#e84800" opacity="0.3"/>
+</g>
+<!-- hex ornament corners -->
+<g opacity="0.1" fill="none" stroke="#e84800" stroke-width="0.5">
+  <polygon points="8,5 16,1 24,5 24,13 16,17 8,13"/>
+  <polygon points="${w-8},${h-5} ${w-16},${h-1} ${w-24},${h-5} ${w-24},${h-13} ${w-16},${h-17} ${w-8},${h-13}"/>
+</g>
+<!-- turret base platform -->
+<g transform="translate(${w/2},${h*.70})" filter="url(#eg${i}glow)">
+  <rect x="-28" y="-6" width="56" height="10" rx="2" fill="#3a1200" stroke="#e84800" stroke-width="0.9"/>
+  <line x1="-22" y1="4" x2="-30" y2="${h*.18}" stroke="#e84800" stroke-width="1.4" opacity="0.5"/>
+  <line x1="22" y1="4" x2="30" y2="${h*.18}" stroke="#e84800" stroke-width="1.4" opacity="0.5"/>
+  <line x1="0" y1="4" x2="0" y2="${h*.2}" stroke="#e84800" stroke-width="1.4" opacity="0.5"/>
+</g>
+<!-- turret body -->
+<g transform="translate(${w/2},${h*.44})" filter="url(#eg${i}glow)">
+  <rect x="-20" y="-16" width="40" height="24" rx="3" fill="#2e0f00" stroke="#e84800" stroke-width="0.9"/>
+  <!-- barrel -->
+  <rect x="-4" y="-34" width="8" height="20" rx="1.5" fill="#1e0a00" stroke="#e84800" stroke-width="0.9"/>
+  <!-- barrel tip glow -->
+  <rect x="-2.5" y="-36" width="5" height="4" rx="1" fill="#ff6633"/>
+  <!-- sensor eye -->
+  <circle cx="14" cy="-5" r="5" fill="none" stroke="#ff7744" stroke-width="0.8"/>
+  <circle cx="14" cy="-5" r="2" fill="#ff7744" opacity="0.9"/>
+  <!-- power cell -->
+  <rect x="-17" y="-10" width="6" height="12" rx="1" fill="#e84800" opacity="0.75"/>
+  <!-- scan lines on body -->
+  <line x1="-18" y1="0" x2="18" y2="0" stroke="#ff6633" stroke-width="0.4" opacity="0.35"/>
+  <line x1="-18" y1="4" x2="18" y2="4" stroke="#ff6633" stroke-width="0.4" opacity="0.2"/>
+</g>
+<!-- targeting beam -->
+<line x1="${w/2}" y1="${h*.22}" x2="${w/2}" y2="${h*.5}" stroke="#ff8855" stroke-width="0.7" opacity="0.25" stroke-dasharray="3,4"/>
+<!-- scan overlay -->
+<rect x="0" y="${h*.47}" width="${w}" height="1.5" fill="#e84800" opacity="0.05"/>
+</svg>`},
+
+  guardian(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="gd${i}a" cx="50%" cy="50%">
+    <stop offset="0%" stop-color="#280a00"/><stop offset="100%" stop-color="#040100"/>
+  </radialGradient>
+  <filter color-interpolation-filters="sRGB" id="gd${i}glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#gd${i}a)"/>
+<!-- diagonal armor stripes background -->
+<g opacity="0.07" stroke="#e84800" stroke-width="8" fill="none">
+  <line x1="-20" y1="0" x2="${w+20}" y2="${h}"/>
+  <line x1="-20" y1="-${h*.3}" x2="${w+20}" y2="${h*.7}"/>
+  <line x1="-20" y1="${h*.3}" x2="${w+20}" y2="${h*1.3}"/>
+</g>
+<!-- soldier silhouette (left) -->
+<g transform="translate(${w*.3},${h*.5})" opacity="0.22" fill="#cc5500">
+  <ellipse cx="0" cy="-${h*.32}" rx="8" ry="10"/>
+  <rect x="-10" y="-${h*.22}" width="20" height="${h*.28}" rx="3"/>
+  <rect x="-16" y="-${h*.2}" width="7" height="${h*.22}" rx="2"/>
+  <rect x="9" y="-${h*.2}" width="7" height="${h*.22}" rx="2"/>
+  <rect x="-8" y="${h*.06}" width="7" height="${h*.2}" rx="2"/>
+  <rect x="1" y="${h*.06}" width="7" height="${h*.2}" rx="2"/>
+</g>
+<!-- shield - main hex -->
+<g transform="translate(${w*.58},${h*.48})" filter="url(#gd${i}glow)">
+  <!-- outer hex -->
+  <polygon points="0,-${h*.42} ${w*.24},-${h*.21} ${w*.24},${h*.21} 0,${h*.42} -${w*.24},${h*.21} -${w*.24},-${h*.21}"
+    fill="#2a0e00" stroke="#e84800" stroke-width="1.2"/>
+  <!-- inner hex cutout -->
+  <polygon points="0,-${h*.3} ${w*.16},-${h*.15} ${w*.16},${h*.15} 0,${h*.3} -${w*.16},${h*.15} -${w*.16},-${h*.15}"
+    fill="none" stroke="#ff7744" stroke-width="0.6" opacity="0.35"/>
+  <!-- cerberus cross pattern -->
+  <line x1="0" y1="-${h*.38}" x2="0" y2="${h*.38}" stroke="#e84800" stroke-width="0.7" opacity="0.4"/>
+  <line x1="-${w*.22}" y1="0" x2="${w*.22}" y2="0" stroke="#e84800" stroke-width="0.7" opacity="0.4"/>
+  <!-- center glow -->
+  <circle cx="0" cy="0" r="8" fill="#e84800" opacity="0.6"/>
+  <circle cx="0" cy="0" r="4" fill="#ff8844"/>
+  <!-- corner pips -->
+  <circle cx="0" cy="-${h*.38}" r="3" fill="#ff6633" opacity="0.8"/>
+  <circle cx="${w*.22}" cy="${h*.13}" r="3" fill="#ff6633" opacity="0.8"/>
+  <circle cx="-${w*.22}" cy="${h*.13}" r="3" fill="#ff6633" opacity="0.8"/>
+</g>
+</svg>`},
+
+  trooper(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="tr${i}a" cx="50%" cy="50%">
+    <stop offset="0%" stop-color="#1a0500"/><stop offset="100%" stop-color="#030100"/>
+  </radialGradient>
+  <filter color-interpolation-filters="sRGB" id="tr${i}glow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#tr${i}a)"/>
+<!-- targeting reticle rings -->
+<g transform="translate(${w*.52},${h*.48})" filter="url(#tr${i}glow)">
+  <circle cx="0" cy="0" r="${w*.35}" fill="none" stroke="#e84800" stroke-width="0.6" opacity="0.12"/>
+  <circle cx="0" cy="0" r="${w*.26}" fill="none" stroke="#e84800" stroke-width="0.5" opacity="0.18"/>
+  <circle cx="0" cy="0" r="${w*.16}" fill="none" stroke="#ff6633" stroke-width="0.7" opacity="0.3"/>
+  <circle cx="0" cy="0" r="${w*.06}" fill="none" stroke="#ff8844" stroke-width="1" opacity="0.55"/>
+  <!-- crosshair lines -->
+  <line x1="-${w*.38}" y1="0" x2="-${w*.19}" y2="0" stroke="#e84800" stroke-width="0.7" opacity="0.45"/>
+  <line x1="${w*.19}" y1="0" x2="${w*.38}" y2="0" stroke="#e84800" stroke-width="0.7" opacity="0.45"/>
+  <line x1="0" y1="-${h*.4}" x2="0" y2="-${h*.19}" stroke="#e84800" stroke-width="0.7" opacity="0.45"/>
+  <line x1="0" y1="${h*.19}" x2="0" y2="${h*.4}" stroke="#e84800" stroke-width="0.7" opacity="0.45"/>
+  <!-- tick marks -->
+  <line x1="${w*.26}" y1="-5" x2="${w*.26}" y2="5" stroke="#ff6633" stroke-width="0.6" opacity="0.5"/>
+  <line x1="-${w*.26}" y1="-5" x2="-${w*.26}" y2="5" stroke="#ff6633" stroke-width="0.6" opacity="0.5"/>
+</g>
+<!-- soldier silhouette running -->
+<g transform="translate(${w*.35},${h*.5}) rotate(-5)" opacity="0.45" fill="#bb3300">
+  <ellipse cx="8" cy="-${h*.3}" rx="9" ry="10"/>
+  <rect x="-2" y="-${h*.19}" width="22" height="${h*.22}" rx="3"/>
+  <!-- running legs -->
+  <rect x="0" y="${h*.03}" width="9" height="${h*.18}" rx="2" transform="rotate(-15 4 ${h*.03})"/>
+  <rect x="10" y="${h*.03}" width="9" height="${h*.18}" rx="2" transform="rotate(20 14 ${h*.03})"/>
+  <!-- arms -->
+  <rect x="-10" y="-${h*.15}" width="7" height="${h*.16}" rx="2" transform="rotate(20 -6 -${h*.15})"/>
+  <rect x="21" y="-${h*.15}" width="7" height="${h*.16}" rx="2" transform="rotate(-20 24 -${h*.15})"/>
+</g>
+<!-- speed lines -->
+<g opacity="0.08" stroke="#e84800" stroke-width="0.7">
+  <line x1="0" y1="${h*.22}" x2="${w*.3}" y2="${h*.28}"/>
+  <line x1="0" y1="${h*.36}" x2="${w*.28}" y2="${h*.4}"/>
+  <line x1="0" y1="${h*.5}" x2="${w*.25}" y2="${h*.52}"/>
+  <line x1="0" y1="${h*.64}" x2="${w*.3}" y2="${h*.65}"/>
+</g>
+<!-- impact markers -->
+<g opacity="0.35">
+  <circle cx="${w*.2}" cy="${h*.18}" r="2" fill="#ff8844" stroke="#e84800" stroke-width="0.5"/>
+  <circle cx="${w*.78}" cy="${h*.72}" r="2" fill="#ff8844" stroke="#e84800" stroke-width="0.5"/>
+</g>
+</svg>`},
+
+  husk(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="hk${i}a" cx="50%" cy="50%">
+    <stop offset="0%" stop-color="#2a0850"/><stop offset="100%" stop-color="#030107"/>
+  </radialGradient>
+  <filter color-interpolation-filters="sRGB" id="hk${i}glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#hk${i}a)"/>
+<!-- neural web / vein pattern -->
+<g stroke="#7722cc" stroke-width="0.5" opacity="0.2" fill="none">
+  <path d="M${w*.5},${h*.05} C${w*.3},${h*.15} ${w*.2},${h*.25} ${w*.25},${h*.45} S${w*.1},${h*.7} ${w*.2},${h*.95}"/>
+  <path d="M${w*.5},${h*.05} C${w*.7},${h*.15} ${w*.8},${h*.25} ${w*.75},${h*.45} S${w*.9},${h*.7} ${w*.8},${h*.95}"/>
+  <path d="M${w*.12},${h*.3} C${w*.3},${h*.35} ${w*.45},${h*.4} ${w*.5},${h*.5} S${w*.55},${h*.6} ${w*.7},${h*.55}"/>
+  <path d="M${w*.15},${h*.6} C${w*.3},${h*.55} ${w*.42},${h*.5} ${w*.5},${h*.5}"/>
+  <path d="M${w*.85},${h*.4} C${w*.7},${h*.45} ${w*.58},${h*.48} ${w*.5},${h*.5}"/>
+  <circle cx="${w*.5}" cy="${h*.5}" r="6" fill="none" stroke="#9955ee" stroke-width="0.8" opacity="0.4"/>
+</g>
+<!-- husk silhouette - corrupted humanoid -->
+<g transform="translate(${w*.5},${h*.98})" filter="url(#hk${i}glow)" opacity="0.75">
+  <!-- head (distorted) -->
+  <ellipse cx="0" cy="-${h*.78}" rx="13" ry="14" fill="#1a063a" stroke="#7722cc" stroke-width="0.8"/>
+  <!-- glowing eyes -->
+  <ellipse cx="-5" cy="-${h*.8}" rx="3.5" ry="2.5" fill="#9944ff"/>
+  <ellipse cx="5" cy="-${h*.8}" rx="3.5" ry="2.5" fill="#9944ff"/>
+  <ellipse cx="-5" cy="-${h*.8}" rx="1.5" ry="1" fill="#cc88ff"/>
+  <ellipse cx="5" cy="-${h*.8}" rx="1.5" ry="1" fill="#cc88ff"/>
+  <!-- torso with reaper tech panel -->
+  <rect x="-14" y="-${h*.64}" width="28" height="${h*.3}" rx="3" fill="#120630" stroke="#7722cc" stroke-width="0.7"/>
+  <rect x="-9" y="-${h*.58}" width="18" height="${h*.18}" rx="2" fill="none" stroke="#9933cc" stroke-width="0.5" opacity="0.6"/>
+  <!-- tech nodes on torso -->
+  <circle cx="-5" cy="-${h*.47}" r="2.5" fill="#7722cc" opacity="0.8"/>
+  <circle cx="5" cy="-${h*.47}" r="2.5" fill="#7722cc" opacity="0.8"/>
+  <!-- arms (jagged/corrupted) -->
+  <path d="M-14,-${h*.6} L-22,-${h*.52} L-26,-${h*.4} L-20,-${h*.35} L-16,-${h*.28}" fill="none" stroke="#7722cc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M14,-${h*.6} L22,-${h*.52} L26,-${h*.4} L20,-${h*.35} L16,-${h*.28}" fill="none" stroke="#7722cc" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- joints glow -->
+  <circle cx="-20" cy="-${h*.42}" r="3" fill="#9944ff" opacity="0.7"/>
+  <circle cx="20" cy="-${h*.42}" r="3" fill="#9944ff" opacity="0.7"/>
+  <circle cx="-14" cy="-${h*.62}" r="2.5" fill="#9944ff" opacity="0.5"/>
+  <circle cx="14" cy="-${h*.62}" r="2.5" fill="#9944ff" opacity="0.5"/>
+  <!-- legs -->
+  <rect x="-12" y="-${h*.34}" width="9" height="${h*.34}" rx="2" fill="#120630" stroke="#7722cc" stroke-width="0.7"/>
+  <rect x="3" y="-${h*.34}" width="9" height="${h*.34}" rx="2" fill="#120630" stroke="#7722cc" stroke-width="0.7"/>
+  <!-- knee joints -->
+  <circle cx="-7" cy="-${h*.17}" r="3" fill="#7722cc" opacity="0.6"/>
+  <circle cx="8" cy="-${h*.17}" r="3" fill="#7722cc" opacity="0.6"/>
+</g>
+<!-- atmospheric particles -->
+<g opacity="0.3">
+  <circle cx="${w*.15}" cy="${h*.2}" r="1.2" fill="#9944ff"/>
+  <circle cx="${w*.82}" cy="${h*.35}" r="1" fill="#9944ff"/>
+  <circle cx="${w*.7}" cy="${h*.15}" r="1.5" fill="#7722cc"/>
+  <circle cx="${w*.22}" cy="${h*.75}" r="1" fill="#9944ff"/>
+  <circle cx="${w*.88}" cy="${h*.7}" r="1.2" fill="#7722cc"/>
+</g>
+</svg>`},
+
+  ravager(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="rv${i}a" cx="50%" cy="50%">
+    <stop offset="0%" stop-color="#1e0540"/><stop offset="100%" stop-color="#020105"/>
+  </radialGradient>
+  <filter color-interpolation-filters="sRGB" id="rv${i}glow"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter color-interpolation-filters="sRGB" id="rv${i}lglow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#rv${i}a)"/>
+<!-- reaper tech line patterns background -->
+<g stroke="#7722cc" stroke-width="0.4" opacity="0.14" fill="none">
+  <path d="M0,${h*.6} L${w*.15},${h*.5} L${w*.3},${h*.55} L${w*.5},${h*.45} L${w*.7},${h*.55} L${w*.85},${h*.5} L${w},${h*.6}"/>
+  <path d="M0,${h*.7} L${w*.12},${h*.62} L${w*.25},${h*.67} L${w*.5},${h*.58} L${w*.75},${h*.67} L${w*.88},${h*.62} L${w},${h*.7}"/>
+</g>
+<!-- ravager body - large low quadruped shape -->
+<g transform="translate(${w*.5},${h*.56})" filter="url(#rv${i}glow)">
+  <!-- main carapace body -->
+  <ellipse cx="0" cy="0" rx="${w*.32}" ry="${h*.22}" fill="#0e052a" stroke="#7722cc" stroke-width="1"/>
+  <!-- dorsal spine cannon -->
+  <rect x="-7" y="-${h*.48}" width="14" height="${h*.28}" rx="2" fill="#0a0420" stroke="#9944ff" stroke-width="0.9"/>
+  <rect x="-4" y="-${h*.5}" width="8" height="6" rx="1" fill="#cc66ff" opacity="0.9"/>
+  <!-- spine segments -->
+  <rect x="-5" y="-${h*.4}" width="10" height="4" rx="1" fill="none" stroke="#7722cc" stroke-width="0.5" opacity="0.5"/>
+  <rect x="-5" y="-${h*.32}" width="10" height="4" rx="1" fill="none" stroke="#7722cc" stroke-width="0.5" opacity="0.5"/>
+  <rect x="-5" y="-${h*.24}" width="10" height="4" rx="1" fill="none" stroke="#7722cc" stroke-width="0.5" opacity="0.5"/>
+  <!-- head -->
+  <ellipse cx="0" cy="-${h*.15}" rx="22" ry="14" fill="#0c0424" stroke="#7722cc" stroke-width="0.8"/>
+  <!-- eyes -->
+  <ellipse cx="-9" cy="-${h*.17}" rx="5" ry="3" fill="#9944ff"/>
+  <ellipse cx="9" cy="-${h*.17}" rx="5" ry="3" fill="#9944ff"/>
+  <ellipse cx="-9" cy="-${h*.17}" rx="2.5" ry="1.5" fill="#ddaaff"/>
+  <ellipse cx="9" cy="-${h*.17}" rx="2.5" ry="1.5" fill="#ddaaff"/>
+  <!-- legs (6 legs) -->
+  <line x1="-${w*.3}" y1="-${h*.05}" x2="-${w*.44}" y2="${h*.18}" stroke="#7722cc" stroke-width="6" stroke-linecap="round" opacity="0.8"/>
+  <line x1="-${w*.28}" y1="${h*.08}" x2="-${w*.42}" y2="${h*.28}" stroke="#7722cc" stroke-width="5" stroke-linecap="round" opacity="0.7"/>
+  <line x1="-${w*.22}" y1="${h*.18}" x2="-${w*.36}" y2="${h*.35}" stroke="#7722cc" stroke-width="4.5" stroke-linecap="round" opacity="0.6"/>
+  <line x1="${w*.3}" y1="-${h*.05}" x2="${w*.44}" y2="${h*.18}" stroke="#7722cc" stroke-width="6" stroke-linecap="round" opacity="0.8"/>
+  <line x1="${w*.28}" y1="${h*.08}" x2="${w*.42}" y2="${h*.28}" stroke="#7722cc" stroke-width="5" stroke-linecap="round" opacity="0.7"/>
+  <line x1="${w*.22}" y1="${h*.18}" x2="${w*.36}" y2="${h*.35}" stroke="#7722cc" stroke-width="4.5" stroke-linecap="round" opacity="0.6"/>
+  <!-- leg joint nodes -->
+  <circle cx="-${w*.3}" cy="-${h*.05}" r="4" fill="#9944ff" opacity="0.6"/>
+  <circle cx="${w*.3}" cy="-${h*.05}" r="4" fill="#9944ff" opacity="0.6"/>
+</g>
+<!-- cannon glow beam -->
+<line x1="${w*.5}" y1="0" x2="${w*.5}" y2="${h*.12}" stroke="#cc66ff" stroke-width="2" opacity="0.2" stroke-dasharray="3,5" filter="url(#rv${i}lglow)"/>
+<!-- atmospheric particles -->
+<g opacity="0.35" filter="url(#rv${i}lglow)">
+  <circle cx="${w*.1}" cy="${h*.15}" r="1.5" fill="#9944ff"/>
+  <circle cx="${w*.9}" cy="${h*.22}" r="1.2" fill="#9944ff"/>
+  <circle cx="${w*.22}" cy="${h*.82}" r="1" fill="#7722cc"/>
+  <circle cx="${w*.78}" cy="${h*.88}" r="1.5" fill="#7722cc"/>
+</g>
+</svg>`},
+
+  cannibal(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="cn${i}a" cx="50%" cy="50%">
+    <stop offset="0%" stop-color="#1e0540"/><stop offset="100%" stop-color="#020105"/>
+  </radialGradient>
+  <filter color-interpolation-filters="sRGB" id="cn${i}glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#cn${i}a)"/>
+<!-- bone/jaw pattern background -->
+<g stroke="#7722cc" stroke-width="0.5" opacity="0.15" fill="none">
+  <path d="M${w*.1},${h*.2} C${w*.2},${h*.1} ${w*.4},${h*.15} ${w*.5},${h*.3}"/>
+  <path d="M${w*.9},${h*.2} C${w*.8},${h*.1} ${w*.6},${h*.15} ${w*.5},${h*.3}"/>
+  <path d="M${w*.2},${h*.8} C${w*.3},${h*.7} ${w*.45},${h*.65} ${w*.5},${h*.5}"/>
+  <path d="M${w*.8},${h*.8} C${w*.7},${h*.7} ${w*.55},${h*.65} ${w*.5},${h*.5}"/>
+</g>
+<!-- cannibal silhouette - hunched, heavy build -->
+<g transform="translate(${w*.5},${h*.98})" filter="url(#cn${i}glow)" opacity="0.78">
+  <!-- head (wide, brutish) -->
+  <ellipse cx="0" cy="-${h*.76}" rx="16" ry="14" fill="#16053a" stroke="#7722cc" stroke-width="0.9"/>
+  <!-- glowing eyes -->
+  <ellipse cx="-6" cy="-${h*.78}" rx="4" ry="3" fill="#cc44ff"/>
+  <ellipse cx="6" cy="-${h*.78}" rx="4" ry="3" fill="#cc44ff"/>
+  <ellipse cx="-6" cy="-${h*.78}" rx="2" ry="1.5" fill="#eeaaff"/>
+  <ellipse cx="6" cy="-${h*.78}" rx="2" ry="1.5" fill="#eeaaff"/>
+  <!-- jaw / mandibles -->
+  <path d="M-14,-${h*.7} L-18,-${h*.62} L-10,-${h*.6} L0,-${h*.64} L10,-${h*.6} L18,-${h*.62} L14,-${h*.7}" fill="#16053a" stroke="#9933cc" stroke-width="0.8"/>
+  <!-- teeth -->
+  <g fill="#cc88ff" opacity="0.7">
+    <rect x="-10" y="-${h*.67}" width="4" height="5" rx="1"/>
+    <rect x="-4" y="-${h*.67}" width="4" height="6" rx="1"/>
+    <rect x="2" y="-${h*.67}" width="4" height="5" rx="1"/>
+    <rect x="8" y="-${h*.67}" width="3" height="4" rx="1"/>
+  </g>
+  <!-- heavy torso -->
+  <rect x="-20" y="-${h*.6}" width="40" height="${h*.32}" rx="4" fill="#120530" stroke="#7722cc" stroke-width="0.8"/>
+  <!-- reaper tech markings -->
+  <rect x="-15" y="-${h*.54}" width="30" height="${h*.2}" rx="2" fill="none" stroke="#9933cc" stroke-width="0.5" opacity="0.55"/>
+  <!-- energy nodes -->
+  <circle cx="-8" cy="-${h*.44}" r="3" fill="#9933cc" opacity="0.85"/>
+  <circle cx="0" cy="-${h*.44}" r="3" fill="#9933cc" opacity="0.85"/>
+  <circle cx="8" cy="-${h*.44}" r="3" fill="#9933cc" opacity="0.85"/>
+  <!-- massive arms -->
+  <path d="M-20,-${h*.56} L-30,-${h*.46} L-34,-${h*.3} L-26,-${h*.24}" fill="none" stroke="#7722cc" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M20,-${h*.56} L30,-${h*.46} L34,-${h*.3} L26,-${h*.24}" fill="none" stroke="#7722cc" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- claws -->
+  <g stroke="#cc88ff" stroke-width="1.2" opacity="0.8">
+    <line x1="-26" y1="-${h*.24}" x2="-32" y2="-${h*.18}"/>
+    <line x1="-26" y1="-${h*.24}" x2="-28" y2="-${h*.14}"/>
+    <line x1="-26" y1="-${h*.24}" x2="-22" y2="-${h*.16}"/>
+    <line x1="26" y1="-${h*.24}" x2="32" y2="-${h*.18}"/>
+    <line x1="26" y1="-${h*.24}" x2="28" y2="-${h*.14}"/>
+    <line x1="26" y1="-${h*.24}" x2="22" y2="-${h*.16}"/>
+  </g>
+  <!-- legs -->
+  <rect x="-16" y="-${h*.28}" width="12" height="${h*.28}" rx="3" fill="#120530" stroke="#7722cc" stroke-width="0.7"/>
+  <rect x="4" y="-${h*.28}" width="12" height="${h*.28}" rx="3" fill="#120530" stroke="#7722cc" stroke-width="0.7"/>
+</g>
+<!-- atmospheric particles -->
+<g opacity="0.3">
+  <circle cx="${w*.12}" cy="${h*.18}" r="1.5" fill="#cc44ff"/>
+  <circle cx="${w*.86}" cy="${h*.28}" r="1.2" fill="#9944ff"/>
+  <circle cx="${w*.74}" cy="${h*.12}" r="1.8" fill="#7722cc"/>
+  <circle cx="${w*.18}" cy="${h*.7}" r="1" fill="#cc44ff"/>
+  <circle cx="${w*.9}" cy="${h*.75}" r="1.4" fill="#7722cc"/>
+</g>
+</svg>`},
+
+  /* ── PRESSURE ART TYPES ─────────────────────────── */
+
+  spawn(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="sp${i}" cx="50%" cy="50%"><stop offset="0%" stop-color="#3a1800"/><stop offset="100%" stop-color="#080300"/></radialGradient>
+  <filter color-interpolation-filters="sRGB" id="sp${i}g"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#sp${i})"/>
+<g transform="translate(${w*.5},${h*.5})" filter="url(#sp${i}g)">
+  <!-- center spawn marker -->
+  <circle cx="0" cy="0" r="12" fill="none" stroke="#ff9a00" stroke-width="1.5" opacity="0.8"/>
+  <circle cx="0" cy="0" r="5" fill="#ff9a00" opacity="0.9"/>
+  <!-- radiating arrows (6 directions) -->
+  <g stroke="#ff9a00" stroke-width="1.8" opacity="0.7" fill="none">
+    <path d="M0,-18 L0,-35 M-5,-28 L0,-35 L5,-28"/>
+    <path d="M0,18 L0,35 M-5,28 L0,35 L5,28"/>
+    <path d="M-16,-9 L-30,-16 M-27,-22 L-30,-16 L-24,-14"/>
+    <path d="M16,-9 L30,-16 M24,-22 L30,-16 L27,-14"/>
+    <path d="M-16,9 L-30,16 M-27,14 L-30,16 L-24,22"/>
+    <path d="M16,9 L30,16 M24,14 L30,16 L27,22"/>
+  </g>
+  <!-- outer ring -->
+  <circle cx="0" cy="0" r="38" fill="none" stroke="#ff9a00" stroke-width="0.5" opacity="0.2" stroke-dasharray="4,6"/>
+</g>
+<!-- corner circuit traces -->
+<g stroke="#ff9a00" stroke-width="0.5" opacity="0.12" fill="none">
+  <path d="M0,0 h20 v${h*.15} l8,8"/>
+  <path d="M${w},${h} h-20 v-${h*.15} l-8,-8"/>
+</g>
+</svg>`},
+
+  lock(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="lk${i}" cx="50%" cy="40%"><stop offset="0%" stop-color="#2a1600"/><stop offset="100%" stop-color="#060300"/></radialGradient>
+  <filter color-interpolation-filters="sRGB" id="lk${i}g"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#lk${i})"/>
+<!-- door frame outline -->
+<g opacity="0.15" stroke="#ff9a00" stroke-width="0.7" fill="none">
+  <rect x="${w*.15}" y="${h*.05}" width="${w*.7}" height="${h*.9}" rx="3"/>
+  <rect x="${w*.2}" y="${h*.1}" width="${w*.6}" height="${h*.8}" rx="2"/>
+</g>
+<!-- padlock icon -->
+<g transform="translate(${w*.5},${h*.58})" filter="url(#lk${i}g)">
+  <!-- shackle -->
+  <path d="M-14,-18 L-14,-28 C-14,-42 14,-42 14,-28 L14,-18" fill="none" stroke="#ff9a00" stroke-width="7" stroke-linecap="round"/>
+  <!-- lock body -->
+  <rect x="-22" y="-18" width="44" height="38" rx="5" fill="#2a1000" stroke="#ff9a00" stroke-width="1.2"/>
+  <!-- keyhole -->
+  <circle cx="0" cy="2" r="7" fill="none" stroke="#ffbb44" stroke-width="1.2" opacity="0.8"/>
+  <rect x="-3" y="6" width="6" height="12" rx="1" fill="#ffbb44" opacity="0.8"/>
+  <!-- warning lines on lock body -->
+  <line x1="-18" y1="-4" x2="18" y2="-4" stroke="#ff9a00" stroke-width="0.5" opacity="0.3"/>
+  <line x1="-18" y1="4" x2="18" y2="4" stroke="#ff9a00" stroke-width="0.5" opacity="0.2"/>
+</g>
+<!-- hex ornament -->
+<g opacity="0.1" fill="none" stroke="#ff9a00" stroke-width="0.5">
+  <polygon points="${w*.08},${h*.08} ${w*.16},${h*.04} ${w*.24},${h*.08} ${w*.24},${h*.16} ${w*.16},${h*.2} ${w*.08},${h*.16}"/>
+</g>
+</svg>`},
+
+  power(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="pw${i}" cx="50%" cy="45%"><stop offset="0%" stop-color="#2e1a00"/><stop offset="100%" stop-color="#050200"/>
+  </radialGradient>
+  <filter color-interpolation-filters="sRGB" id="pw${i}g"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#pw${i})"/>
+<!-- lightning bolt -->
+<g transform="translate(${w*.5},${h*.5})" filter="url(#pw${i}g)">
+  <!-- outer glow ring -->
+  <circle cx="0" cy="0" r="${h*.38}" fill="none" stroke="#ff9a00" stroke-width="0.5" opacity="0.12"/>
+  <circle cx="0" cy="0" r="${h*.3}" fill="none" stroke="#ff9a00" stroke-width="0.4" opacity="0.15"/>
+  <!-- lightning bolt shape -->
+  <polygon points="12,-${h*.38} -4,-${h*.02} 8,-${h*.02} -12,${h*.38} 4,${h*.04} -8,${h*.04}"
+    fill="#ff9a00" opacity="0.9"/>
+  <!-- energy rings radiating out -->
+  <circle cx="0" cy="0" r="${h*.42}" fill="none" stroke="#ffbb44" stroke-width="0.7" opacity="0.18" stroke-dasharray="5,8"/>
+  <circle cx="0" cy="0" r="${h*.48}" fill="none" stroke="#ffbb44" stroke-width="0.5" opacity="0.1" stroke-dasharray="3,10"/>
+</g>
+<!-- corner power cells -->
+<g opacity="0.2" fill="none" stroke="#ff9a00" stroke-width="0.6">
+  <rect x="6" y="6" width="12" height="20" rx="2"/>
+  <rect x="${w-18}" y="${h-26}" width="12" height="20" rx="2"/>
+  <line x1="12" y1="9" x2="12" y2="15" stroke="#ffbb44" stroke-width="1.2"/>
+  <line x1="${w-12}" y1="${h-22}" x2="${w-12}" y2="${h-16}" stroke="#ffbb44" stroke-width="1.2"/>
+</g>
+</svg>`},
+
+  collapse(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient color-interpolation="sRGB" id="cl${i}" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0%" stop-color="#1e0800"/><stop offset="100%" stop-color="#040200"/>
+  </linearGradient>
+  <filter color-interpolation-filters="sRGB" id="cl${i}g"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#cl${i})"/>
+<!-- broken floor effect -->
+<g opacity="0.25" stroke="#ff9a00" stroke-width="0.5" fill="none">
+  <line x1="0" y1="${h*.65}" x2="${w*.3}" y2="${h*.6}"/>
+  <line x1="${w*.3}" y1="${h*.6}" x2="${w*.55}" y2="${h*.68}"/>
+  <line x1="${w*.55}" y1="${h*.68}" x2="${w}" y2="${h*.58}"/>
+  <line x1="${w*.15}" y1="${h*.75}" x2="${w*.45}" y2="${h*.7}"/>
+  <line x1="${w*.45}" y1="${h*.7}" x2="${w*.7}" y2="${h*.78}"/>
+  <line x1="${w*.7}" y1="${h*.78}" x2="${w}" y2="${h*.72}"/>
+</g>
+<!-- explosion / collapse center -->
+<g transform="translate(${w*.5},${h*.45})" filter="url(#cl${i}g)">
+  <!-- debris shards -->
+  <g stroke="#ff9a00" stroke-width="1.2" fill="none" opacity="0.7">
+    <line x1="0" y1="-${h*.38}" x2="-8" y2="-${h*.22}"/>
+    <line x1="0" y1="-${h*.38}" x2="8" y2="-${h*.22}"/>
+    <line x1="-${w*.32}" y1="-${h*.12}" x2="-${w*.18}" y2="-4"/>
+    <line x1="${w*.32}" y1="-${h*.12}" x2="${w*.18}" y2="-4"/>
+    <line x1="-${w*.28}" y1="${h*.2}" x2="-${w*.14}" y2="${h*.06}"/>
+    <line x1="${w*.28}" y1="${h*.2}" x2="${w*.14}" y2="${h*.06}"/>
+    <line x1="-4" y1="${h*.38}" x2="-2" y2="${h*.2}"/>
+    <line x1="4" y1="${h*.38}" x2="2" y2="${h*.2}"/>
+  </g>
+  <!-- impact center -->
+  <polygon points="0,-16 10,-10 16,0 10,10 0,16 -10,10 -16,0 -10,-10" fill="#ff9a00" opacity="0.85"/>
+  <polygon points="0,-8 5,-5 8,0 5,5 0,8 -5,5 -8,0 -5,-5" fill="#ffcc44"/>
+</g>
+<!-- inferno hex indicators -->
+<g opacity="0.3" fill="none" stroke="#ff9a00" stroke-width="0.7">
+  <polygon points="${w*.12},${h*.82} ${w*.2},${h*.78} ${w*.28},${h*.82} ${w*.28},${h*.9} ${w*.2},${h*.94} ${w*.12},${h*.9}"/>
+  <polygon points="${w*.72},${h*.8} ${w*.8},${h*.76} ${w*.88},${h*.8} ${w*.88},${h*.88} ${w*.8},${h*.92} ${w*.72},${h*.88}"/>
+  <text x="${w*.2}" y="${h*.89}" font-size="7" text-anchor="middle" fill="#ff9a00" font-family="monospace">🔥</text>
+</g>
+</svg>`},
+
+  signal(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="sg${i}" cx="50%" cy="50%"><stop offset="0%" stop-color="#1a1000"/><stop offset="100%" stop-color="#030200"/></radialGradient>
+  <filter color-interpolation-filters="sRGB" id="sg${i}g"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#sg${i})"/>
+<g transform="translate(${w*.5},${h*.5})" filter="url(#sg${i}g)">
+  <!-- signal waves (broken) -->
+  <g fill="none" stroke="#ff9a00" opacity="0.65">
+    <path d="M-${w*.38},-${h*.32} C-${w*.28},-${h*.44} -${w*.18},-${h*.44} 0,${h*.02}"
+      stroke-width="1.4" stroke-dasharray="5,4"/>
+    <path d="M${w*.38},-${h*.32} C${w*.28},-${h*.44} ${w*.18},-${h*.44} 0,${h*.02}"
+      stroke-width="1.4" stroke-dasharray="5,4"/>
+    <path d="M-${w*.24},-${h*.18} C-${w*.16},-${h*.3} -${w*.08},-${h*.3} 0,${h*.02}"
+      stroke-width="1.2" stroke-dasharray="4,5"/>
+    <path d="M${w*.24},-${h*.18} C${w*.16},-${h*.3} ${w*.08},-${h*.3} 0,${h*.02}"
+      stroke-width="1.2" stroke-dasharray="4,5"/>
+  </g>
+  <!-- broadcast tower (damaged) -->
+  <line x1="0" y1="${h*.02}" x2="0" y2="${h*.42}" stroke="#ff9a00" stroke-width="3" opacity="0.8"/>
+  <line x1="-14" y1="${h*.42}" x2="14" y2="${h*.42}" stroke="#ff9a00" stroke-width="2" opacity="0.8"/>
+  <!-- X cancel overlay -->
+  <line x1="-${w*.3}" y1="-${h*.38}" x2="${w*.3}" y2="${h*.38}" stroke="#ff3300" stroke-width="2.5" opacity="0.7"/>
+  <line x1="${w*.3}" y1="-${h*.38}" x2="-${w*.3}" y2="${h*.38}" stroke="#ff3300" stroke-width="2.5" opacity="0.7"/>
+</g>
+</svg>`},
+
+  wave(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="wv${i}" cx="30%" cy="50%"><stop offset="0%" stop-color="#0e0528"/><stop offset="100%" stop-color="#030107"/></radialGradient>
+  <filter color-interpolation-filters="sRGB" id="wv${i}g"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#wv${i})"/>
+<!-- multiple running husk silhouettes -->
+<g fill="#7722cc" opacity="0.55">
+  ${[-.38,-.18,.04,.24].map((xo,j)=>`
+  <g transform="translate(${w*(0.2+j*.2)},${h*.62})">
+    <ellipse cx="0" cy="-${h*.32}" rx="7" ry="8"/>
+    <rect x="-8" y="-${h*.24}" width="16" height="${h*.22}" rx="2"/>
+    <rect x="-6" y="${h*.0}" width="5" height="${h*.16}" rx="1" transform="rotate(${-10+j*5} -3 0)"/>
+    <rect x="3" y="${h*.0}" width="5" height="${h*.16}" rx="1" transform="rotate(${15-j*5} 5 0)"/>
+    <circle cx="-4" cy="-${h*.35}" r="2" fill="#9944ff"/>
+    <circle cx="4" cy="-${h*.35}" r="2" fill="#9944ff"/>
+  </g>`).join('')}
+</g>
+<!-- motion arrows -->
+<g stroke="#9944ff" stroke-width="1.2" opacity="0.35" fill="none">
+  <path d="M${w*.05},${h*.5} h${w*.18} l-6,-6 M${w*.23},${h*.5} l-6,6"/>
+  <path d="M${w*.2},${h*.6} h${w*.18} l-6,-6 M${w*.38},${h*.6} l-6,6"/>
+</g>
+</svg>`},
+
+  protocol(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="pt${i}" cx="50%" cy="45%"><stop offset="0%" stop-color="#220c00"/><stop offset="100%" stop-color="#050200"/></radialGradient>
+  <filter color-interpolation-filters="sRGB" id="pt${i}g"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#pt${i})"/>
+<g transform="translate(${w*.5},${h*.46})" filter="url(#pt${i}g)">
+  <!-- outer glow rings -->
+  <circle cx="0" cy="0" r="${h*.42}" fill="none" stroke="#e84800" stroke-width="0.5" opacity="0.12"/>
+  <circle cx="0" cy="0" r="${h*.35}" fill="none" stroke="#e84800" stroke-width="0.4" opacity="0.15"/>
+  <!-- cerberus-style three-headed symbol (abstract) -->
+  <g fill="none" stroke="#e84800" stroke-width="1.2" opacity="0.85">
+    <!-- main neck -->
+    <line x1="0" y1="-${h*.06}" x2="0" y2="${h*.22}"/>
+    <!-- three heads as hexagons -->
+    <polygon points="0,-${h*.38} ${w*.12},-${h*.29} ${w*.12},-${h*.18} 0,-${h*.12} -${w*.12},-${h*.18} -${w*.12},-${h*.29}"/>
+    <polygon points="${w*.22},-${h*.12} ${w*.34},-${h*.03} ${w*.34},${h*.08} ${w*.22},${h*.14} ${w*.1},${h*.08} ${w*.1},-${h*.03}"/>
+    <polygon points="-${w*.22},-${h*.12} -${w*.1},-${h*.03} -${w*.1},${h*.08} -${w*.22},${h*.14} -${w*.34},${h*.08} -${w*.34},-${h*.03}"/>
+    <!-- neck branches -->
+    <path d="M0,-${h*.12} C${w*.08},-${h*.06} ${w*.12},-${h*.04} ${w*.1},-${h*.03}"/>
+    <path d="M0,-${h*.12} C-${w*.08},-${h*.06} -${w*.12},-${h*.04} -${w*.1},-${h*.03}"/>
+  </g>
+  <!-- center fill -->
+  <polygon points="0,-${h*.38} ${w*.12},-${h*.29} ${w*.12},-${h*.18} 0,-${h*.12} -${w*.12},-${h*.18} -${w*.12},-${h*.29}"
+    fill="#e84800" opacity="0.3"/>
+</g>
+</svg>`},
+
+  shieldfail(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="sf${i}" cx="50%" cy="45%"><stop offset="0%" stop-color="#1c0e00"/><stop offset="100%" stop-color="#040200"/></radialGradient>
+  <filter color-interpolation-filters="sRGB" id="sf${i}g"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#sf${i})"/>
+<g transform="translate(${w*.5},${h*.46})" filter="url(#sf${i}g)">
+  <!-- shield outline (cracked) -->
+  <path d="M0,-${h*.42} L${w*.3},-${h*.32} L${w*.3},${h*.06} C${w*.3},${h*.24} ${w*.16},${h*.38} 0,${h*.42} C-${w*.16},${h*.38} -${w*.3},${h*.24} -${w*.3},${h*.06} L-${w*.3},-${h*.32} Z"
+    fill="#1a0800" stroke="#ff9a00" stroke-width="1.2" opacity="0.85"/>
+  <!-- crack lines through shield -->
+  <g stroke="#ff3300" stroke-width="1.4" opacity="0.75" fill="none">
+    <path d="M${w*.06},-${h*.35} L-${w*.04},-${h*.18} L${w*.1},-${h*.05} L-${w*.06},${h*.12} L${w*.04},${h*.3}"/>
+    <path d="M-${w*.06},-${h*.3} L-${w*.14},-${h*.15} L-${w*.04},-${h*.02}"/>
+    <path d="M${w*.12},-${h*.1} L${w*.2},${h*.04}"/>
+  </g>
+  <!-- shield value indicator (broken) -->
+  <g opacity="0.6">
+    <path d="M-${w*.22},-${h*.05} L-${w*.28},-${h*.05} L-${w*.28},${h*.05} L-${w*.22},${h*.05}"
+      stroke="#ff9a00" stroke-width="1" fill="none"/>
+    <!-- X through it -->
+    <line x1="-${w*.28}" y1="-${h*.05}" x2="-${w*.22}" y2="${h*.05}" stroke="#ff3300" stroke-width="1.2"/>
+    <line x1="-${w*.22}" y1="-${h*.05}" x2="-${w*.28}" y2="${h*.05}" stroke="#ff3300" stroke-width="1.2"/>
+  </g>
+</g>
+</svg>`},
+
+  system(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="sy${i}" cx="50%" cy="45%"><stop offset="0%" stop-color="#1a1000"/><stop offset="100%" stop-color="#040200"/></radialGradient>
+  <filter color-interpolation-filters="sRGB" id="sy${i}g"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#sy${i})"/>
+<!-- broken gear / system collapse icon -->
+<g transform="translate(${w*.5},${h*.48})" filter="url(#sy${i}g)">
+  <!-- gear teeth (outer) -->
+  <g fill="#2a1200" stroke="#ff9a00" stroke-width="0.9" opacity="0.8">
+    ${Array.from({length:8},(_,k)=>{const a=k*45*Math.PI/180; const r1=h*.32; const r2=h*.38; const r3=h*.28; return`
+    <line x1="${Math.cos(a)*r3}" y1="${Math.sin(a)*r3}" x2="${Math.cos(a)*r2}" y2="${Math.sin(a)*r2}" stroke-width="6" stroke-linecap="round" opacity="0.7"/>`}).join('')}
+  </g>
+  <!-- gear body ring -->
+  <circle cx="0" cy="0" r="${h*.3}" fill="#1e0e00" stroke="#ff9a00" stroke-width="1.2" opacity="0.8"/>
+  <circle cx="0" cy="0" r="${h*.16}" fill="#140800" stroke="#ff9a00" stroke-width="0.8" opacity="0.6"/>
+  <!-- error X center -->
+  <line x1="-${h*.08}" y1="-${h*.08}" x2="${h*.08}" y2="${h*.08}" stroke="#ff3300" stroke-width="2.2"/>
+  <line x1="${h*.08}" y1="-${h*.08}" x2="-${h*.08}" y2="${h*.08}" stroke="#ff3300" stroke-width="2.2"/>
+  <!-- spark/crack from gear -->
+  <path d="M${h*.3},0 L${h*.38},${h*.08} L${h*.32},${h*.18}" stroke="#ffcc00" stroke-width="1.2" fill="none" opacity="0.6"/>
+</g>
+</svg>`},
+
+  elite(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="el${i}" cx="50%" cy="42%"><stop offset="0%" stop-color="#280c00"/><stop offset="100%" stop-color="#060100"/></radialGradient>
+  <filter color-interpolation-filters="sRGB" id="el${i}g"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#el${i})"/>
+
+<!-- elite soldier silhouette - larger, more imposing -->
+<g transform="translate(${w*.5},${h*.98})" filter="url(#el${i}g)" opacity="0.8">
+  <!-- head with helmet/visor -->
+  <ellipse cx="0" cy="-${h*.72}" rx="14" ry="15" fill="#1e0800" stroke="#e84800" stroke-width="0.9"/>
+  <!-- visor glow -->
+  <rect x="-10" y="-${h*.77}" width="20" height="8" rx="3" fill="#ff4400" opacity="0.7"/>
+  <!-- shoulder pauldrons -->
+  <rect x="-26" y="-${h*.56}" width="14" height="10" rx="2" fill="#1e0800" stroke="#e84800" stroke-width="0.7"/>
+  <rect x="12" y="-${h*.56}" width="14" height="10" rx="2" fill="#1e0800" stroke="#e84800" stroke-width="0.7"/>
+  <!-- torso (heavy armor) -->
+  <rect x="-18" y="-${h*.46}" width="36" height="${h*.3}" rx="3" fill="#160600" stroke="#e84800" stroke-width="0.9"/>
+  <!-- N7 stripe on chest -->
+  <rect x="-16" y="-${h*.36}" width="5" height="${h*.18}" rx="1" fill="#cc2200" opacity="0.9"/>
+  <!-- arms -->
+  <rect x="-28" y="-${h*.44}" width="11" height="${h*.26}" rx="3" fill="#1a0700" stroke="#e84800" stroke-width="0.7"/>
+  <rect x="17" y="-${h*.44}" width="11" height="${h*.26}" rx="3" fill="#1a0700" stroke="#e84800" stroke-width="0.7"/>
+
+  <!-- legs -->
+  <rect x="-14" y="-${h*.16}" width="11" height="${h*.16}" rx="2" fill="#140600" stroke="#e84800" stroke-width="0.6"/>
+  <rect x="3" y="-${h*.16}" width="11" height="${h*.16}" rx="2" fill="#140600" stroke="#e84800" stroke-width="0.6"/>
+</g>
+<!-- elite rank symbol (3 diamonds) -->
+<g transform="translate(${w*.5},${h*.2})" fill="#ff9a00" opacity="0.7">
+  <rect x="-22" y="-5" width="10" height="10" transform="rotate(45)"/>
+  <rect x="-4" y="-5" width="10" height="10" transform="rotate(45)"/>
+  <rect x="14" y="-5" width="10" height="10" transform="rotate(45)"/>
+</g>
+</svg>`},
+
+  storm(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="st${i}" cx="50%" cy="45%"><stop offset="0%" stop-color="#141000"/><stop offset="100%" stop-color="#020200"/></radialGradient>
+  <filter color-interpolation-filters="sRGB" id="st${i}g"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#st${i})"/>
+<!-- swirling magnetic storm -->
+<g transform="translate(${w*.5},${h*.48})" filter="url(#st${i}g)">
+  <!-- spiral arms -->
+  <g fill="none" stroke="#ff9a00" stroke-linecap="round">
+    <path d="M0,0 C${w*.1},-${h*.08} ${w*.22},-${h*.04} ${w*.28},${h*.08} C${w*.34},${h*.2} ${w*.22},${h*.32} ${w*.08},${h*.36} C-${w*.1},${h*.38} -${w*.28},${h*.26} -${w*.32},${h*.08} C-${w*.36},-${h*.12} -${w*.22},-${h*.3} 0,-${h*.36} C${w*.18},-${h*.4} ${w*.36},-${h*.28} ${w*.38},-${h*.1}"
+      stroke-width="1.8" opacity="0.45"/>
+    <path d="M0,0 C-${w*.08},-${h*.1} -${w*.18},-${h*.06} -${w*.22},${h*.04} C-${w*.26},${h*.14} -${w*.16},${h*.22} -${w*.04},${h*.24} C${w*.1},${h*.26} ${w*.2},${h*.16} ${w*.2},${h*.04} C${w*.2},-${h*.1} ${w*.08},-${h*.2} -${w*.04},-${h*.22}"
+      stroke-width="1.2" opacity="0.35"/>
+  </g>
+  <!-- center vortex -->
+  <circle cx="0" cy="0" r="6" fill="#ff9a00" opacity="0.8"/>
+  <circle cx="0" cy="0" r="12" fill="none" stroke="#ffbb44" stroke-width="0.8" opacity="0.5"/>
+  <circle cx="0" cy="0" r="20" fill="none" stroke="#ff9a00" stroke-width="0.5" opacity="0.3"/>
+  <!-- floating debris particles -->
+  <g fill="#ffaa33" opacity="0.5">
+    <rect x="${w*.2}" y="-${h*.18}" width="5" height="3" rx="0.5" transform="rotate(20)"/>
+    <rect x="-${w*.24}" y="-${h*.1}" width="4" height="4" rx="0.5" transform="rotate(-30)"/>
+    <rect x="${w*.08}" y="${h*.26}" width="6" height="2" rx="0.5" transform="rotate(45)"/>
+    <rect x="-${w*.14}" y="${h*.22}" width="3" height="5" rx="0.5" transform="rotate(-15)"/>
+  </g>
+</g>
+</svg>`},
+
+  alarm(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="al${i}" cx="50%" cy="40%"><stop offset="0%" stop-color="#200800"/><stop offset="100%" stop-color="#040100"/></radialGradient>
+  <filter color-interpolation-filters="sRGB" id="al${i}g"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#al${i})"/>
+<!-- siren alarm with radiating waves -->
+<g transform="translate(${w*.5},${h*.60})" filter="url(#al${i}g)">
+  <!-- siren housing -->
+  <rect x="-22" y="-${h*.12}" width="44" height="${h*.22}" rx="4" fill="#1e0600" stroke="#e84800" stroke-width="1.1"/>
+  <!-- siren dome -->
+  <path d="M-18,-${h*.12} C-18,-${h*.32} 18,-${h*.32} 18,-${h*.12}" fill="#2a0a00" stroke="#e84800" stroke-width="1"/>
+  <!-- rotating beacon light -->
+  <circle cx="0" cy="-${h*.22}" r="8" fill="#ff4400" opacity="0.9"/>
+  <circle cx="0" cy="-${h*.22}" r="4" fill="#ffaa33"/>
+  <!-- mount post -->
+  <rect x="-4" y="${h*.1}" width="8" height="${h*.2}" rx="1" fill="#1a0600" stroke="#e84800" stroke-width="0.6"/>
+  <!-- radiating alert waves -->
+  <g fill="none" stroke="#ff4400" opacity="0.4">
+    <path d="M-${w*.3},-${h*.22} C-${w*.3},-${h*.48} ${w*.3},-${h*.48} ${w*.3},-${h*.22}" stroke-width="1"/>
+    <path d="M-${w*.42},-${h*.22} C-${w*.42},-${h*.58} ${w*.42},-${h*.58} ${w*.42},-${h*.22}" stroke-width="0.7"/>
+    <path d="M-${w*.22},-${h*.22} C-${w*.22},-${h*.38} ${w*.22},-${h*.38} ${w*.22},-${h*.22}" stroke-width="1.2"/>
+  </g>
+  <!-- alert bars at bottom -->
+  <g opacity="0.7">
+    ${[-3,-1,1,3].map(x=>`<rect x="${x*5-2}" y="${h*.12}" width="4" height="${h*.06}" rx="0.5" fill="#ff4400" opacity="${0.4+Math.abs(x)*0.15}"/>`).join('')}
+  </g>
+</g>
+</svg>`},
+
+  danger(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="dg${i}" cx="50%" cy="45%"><stop offset="0%" stop-color="#200800"/><stop offset="100%" stop-color="#040100"/></radialGradient>
+  <filter color-interpolation-filters="sRGB" id="dg${i}g"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#dg${i})"/>
+<!-- danger triangle with target cross -->
+<g transform="translate(${w*.5},${h*.5})" filter="url(#dg${i}g)">
+  <!-- triangle -->
+  <polygon points="0,-${h*.42} ${w*.38},${h*.26} -${w*.38},${h*.26}"
+    fill="#1a0800" stroke="#ff9a00" stroke-width="1.5" stroke-linejoin="round" opacity="0.9"/>
+  <!-- inner triangle -->
+  <polygon points="0,-${h*.32} ${w*.28},${h*.18} -${w*.28},${h*.18}"
+    fill="none" stroke="#ff9a00" stroke-width="0.5" opacity="0.3"/>
+  <!-- crosshair inside -->
+  <circle cx="0" cy="${h*.06}" r="14" fill="none" stroke="#ff6600" stroke-width="1" opacity="0.6"/>
+  <circle cx="0" cy="${h*.06}" r="5" fill="#ff4400" opacity="0.8"/>
+  <line x1="-22" y1="${h*.06}" x2="-10" y2="${h*.06}" stroke="#ff6600" stroke-width="0.8" opacity="0.6"/>
+  <line x1="10" y1="${h*.06}" x2="22" y2="${h*.06}" stroke="#ff6600" stroke-width="0.8" opacity="0.6"/>
+  <line x1="0" y1="${h*.06-22}" x2="0" y2="${h*.06-10}" stroke="#ff6600" stroke-width="0.8" opacity="0.6"/>
+  <line x1="0" y1="${h*.06+10}" x2="0" y2="${h*.06+22}" stroke="#ff6600" stroke-width="0.8" opacity="0.6"/>
+  <!-- exclamation mark at top of triangle -->
+  <rect x="-3" y="-${h*.28}" width="6" height="16" rx="2" fill="#ff9a00"/>
+  <circle cx="0" cy="-${h*.1}" r="3.5" fill="#ff9a00"/>
+</g>
+</svg>`},
+
+  bio(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="bi${i}" cx="50%" cy="45%"><stop offset="0%" stop-color="#0e0828"/><stop offset="100%" stop-color="#030106"/></radialGradient>
+  <filter color-interpolation-filters="sRGB" id="bi${i}g"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#bi${i})"/>
+<g transform="translate(${w*.5},${h*.48})" filter="url(#bi${i}g)">
+  <!-- biohazard / nanite swarm symbol (3-lobed) -->
+  <circle cx="0" cy="0" r="10" fill="#9944ff" opacity="0.9"/>
+  <!-- 3 lobes -->
+  ${[0,120,240].map(a=>{const rad=a*Math.PI/180; const cx=Math.cos(rad)*h*.22; const cy=Math.sin(rad)*h*.22; return`
+  <circle cx="${cx}" cy="${cy}" r="${h*.16}" fill="none" stroke="#9944ff" stroke-width="1.6" opacity="0.75"/>
+  <circle cx="${cx}" cy="${cy}" r="5" fill="#9944ff" opacity="0.5"/>`}).join('')}
+  <!-- outer containment ring -->
+  <circle cx="0" cy="0" r="${h*.4}" fill="none" stroke="#7722cc" stroke-width="1" opacity="0.4" stroke-dasharray="8,5"/>
+  <circle cx="0" cy="0" r="${h*.43}" fill="none" stroke="#7722cc" stroke-width="0.5" opacity="0.2"/>
+  <!-- nanite particle dots -->
+  <g fill="#cc88ff" opacity="0.5">
+    ${Array.from({length:8},(_,k)=>{const a2=k*45*Math.PI/180; const r2=h*.32; return`<circle cx="${Math.cos(a2)*r2}" cy="${Math.sin(a2)*r2}" r="2"/>`}).join('')}
+  </g>
+</g>
+</svg>`},
+
+  leak(w,h,i){return`<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient color-interpolation="sRGB" id="lc${i}" cx="50%" cy="30%"><stop offset="0%" stop-color="#001e28"/><stop offset="100%" stop-color="#010506"/></radialGradient>
+  <filter color-interpolation-filters="sRGB" id="lc${i}g"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="${w}" height="${h}" fill="url(#lc${i})"/>
+<!-- coolant pipes and leak -->
+<g transform="translate(${w*.5},${h*.3})" filter="url(#lc${i}g)">
+  <!-- pipe horizontal -->
+  <rect x="-${w*.44}" y="-8" width="${w*.88}" height="16" rx="4" fill="#002030" stroke="#00aadd" stroke-width="0.9" opacity="0.8"/>
+  <!-- pipe end caps -->
+  <rect x="-${w*.46}" y="-12" width="8" height="24" rx="2" fill="#003040" stroke="#00aadd" stroke-width="0.8" opacity="0.7"/>
+  <rect x="${w*.38}" y="-12" width="8" height="24" rx="2" fill="#003040" stroke="#00aadd" stroke-width="0.8" opacity="0.7"/>
+  <!-- crack / leak point -->
+  <path d="M-6,-8 L4,0 L-2,8" stroke="#ffffff" stroke-width="1.2" fill="none" opacity="0.6"/>
+  <!-- coolant spray downward -->
+  <g opacity="0.65" fill="#44ccff">
+    ${Array.from({length:6},(_,k)=>{const x=(k-2.5)*6; const len=h*(.12+k*.04); return`
+    <rect x="${x-1.5}" y="8" width="3" height="${len}" rx="1.5" opacity="${0.4+k*.08}" transform="rotate(${(k-2.5)*4} ${x} 8}"/>`}).join('')}
+  </g>
+  <!-- frost/ice effect at bottom -->
+  <path d="M-${w*.35},${h*.5} C-${w*.2},${h*.38} ${w*.2},${h*.38} ${w*.35},${h*.5}"
+    stroke="#88ddff" stroke-width="1" fill="none" opacity="0.4"/>
+</g>
+<!-- snowflake icon (coolant) -->
+<g transform="translate(${w*.15},${h*.78})" stroke="#44aacc" stroke-width="0.8" opacity="0.4" fill="none">
+  <line x1="-10" y1="0" x2="10" y2="0"/>
+  <line x1="0" y1="-10" x2="0" y2="10"/>
+  <line x1="-7" y1="-7" x2="7" y2="7"/>
+  <line x1="7" y1="-7" x2="-7" y2="7"/>
+</g>
+</svg>`}
+
+}; // end ART object
+
+/* ════════════════════════════════════════════════════════════════
+   RENDER FUNCTIONS
+════════════════════════════════════════════════════════════════ */
+
+function renderBehCard(card, idx){
+  const type = card.type === 'cerberus' ? 'ce' : 're';
+  const artSvg = ART[card.artKey] ? ART[card.artKey](240,100,idx) : '';
+  const pris = card.priorities.map((txt,j)=>`
+    <div class="pri-row">
+      <div class="pri-num">${j+1}</div>
+      <div class="pri-txt">${txt}</div>
+    </div>`).join('');
+  return `
+<div class="card beh ${type}">
+  <div class="beh-hdr">
+    <span class="hdr-faction">${card.faction}</span>
+    <div class="hdr-line"></div>
+    <div class="hdr-pips"><div class="pip"></div><div class="pip"></div><div class="pip"></div></div>
+  </div>
+  <div class="beh-art">${artSvg}</div>
+  <div class="beh-nm">
+    <div class="beh-title">${card.name}</div>
+    ${card.keyword ? `<span class="beh-keyword">${card.keyword}</span>` : ''}
+    <div class="beh-cat">Vzorec chování</div>
+  </div>
+  <div class="beh-pris">${pris}</div>
+  <div class="beh-ftr">
+    <div class="ftr-bar"></div>
+    <span class="ftr-code">${card.code}</span>
+  </div>
+</div>`;
+}
+
+function renderPresCard(card, idx){
+  const artSvg = ART[card.artKey] ? ART[card.artKey](240,86,idx) : '';
+  return `
+<div class="card pres">
+  <div class="pres-hdr">
+    <span class="pres-hdr-lbl">⚠ Karta Tlaku</span>
+    <div class="pres-hdr-line"></div>
+    <span class="pres-hdr-sym">▲</span>
+  </div>
+  <div class="pres-art">${artSvg}</div>
+  <div class="pres-nm">
+    <div class="pres-title">${card.name}</div>
+    <div class="pres-sub">${card.subtype}</div>
+  </div>
+  <div class="pres-body">${card.text}</div>
+  <div class="pres-timing">
+    <span class="t-pill">${card.timing}</span>
+  </div>
+  <div class="pres-ftr">
+    <div class="pres-ftr-bar"></div>
+    <span class="pres-ftr-code">${card.code}</span>
+  </div>
+</div>`;
+}
+
+function renderBehBack(idx){
+  return `<div class="card back back-beh">
+    <svg viewBox="0 0 240 336" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient color-interpolation="sRGB" id="bb${idx}" cx="50%" cy="50%">
+          <stop offset="0%" stop-color="#0a1e38"/><stop offset="100%" stop-color="#020608"/>
+        </radialGradient>
+        <filter color-interpolation-filters="sRGB" id="bbg${idx}"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect width="240" height="336" fill="url(#bb${idx})"/>
+      <!-- hex grid pattern -->
+      <g stroke="#00cfff" stroke-width="0.4" opacity="0.06" fill="none">
+        ${Array.from({length:7},(_,r)=>Array.from({length:5},(_,c)=>{
+          const x=c*50+(r%2)*25; const y=r*43;
+          return `<polygon points="${x},${y+12} ${x+12},${y+6} ${x+24},${y+12} ${x+24},${y+24} ${x+12},${y+30} ${x},${y+24}"/>`;
+        }).join('')).join('')}
+      </g>
+      <!-- central design -->
+      <g transform="translate(120,168)" filter="url(#bbg${idx})">
+        <!-- outer ring -->
+        <circle cx="0" cy="0" r="72" fill="none" stroke="#00cfff" stroke-width="0.6" opacity="0.35"/>
+        <circle cx="0" cy="0" r="65" fill="none" stroke="#00cfff" stroke-width="0.3" opacity="0.2"/>
+        <!-- hex frame -->
+        <polygon points="0,-58 50,-29 50,29 0,58 -50,29 -50,-29"
+          fill="none" stroke="#00cfff" stroke-width="1" opacity="0.5"/>
+        <polygon points="0,-46 40,-23 40,23 0,46 -40,23 -40,-23"
+          fill="#040e1c" stroke="#00cfff" stroke-width="0.5" opacity="0.3"/>
+        <!-- N7 symbol (stylized) -->
+        <g fill="none" stroke="#00cfff" stroke-width="2" opacity="0.8" stroke-linecap="round">
+          <line x1="-18" y1="-22" x2="-18" y2="22"/>
+          <line x1="-18" y1="-22" x2="18" y2="22"/>
+          <line x1="18" y1="-22" x2="18" y2="22"/>
+        </g>
+        <!-- corner pips on hex -->
+        ${[0,60,120,180,240,300].map(a=>{const r=a*Math.PI/180; return`<circle cx="${Math.cos(r)*58}" cy="${Math.sin(r)*58}" r="2.5" fill="#00cfff" opacity="0.45"/>`;}).join('')}
+      </g>
+      <!-- label -->
+      <text x="120" y="285" font-family="'Orbitron',monospace" font-size="9" fill="#00cfff"
+        opacity="0.45" text-anchor="middle" letter-spacing="3">CHOVÁNÍ NEPŘÍTELE</text>
+      <!-- border decoration -->
+      <rect x="2" y="2" width="236" height="332" rx="6" fill="none" stroke="#0e2a44" stroke-width="1.5"/>
+    </svg>
+  </div>`;
+}
+
+function renderPresBack(idx){
+  return `<div class="card back back-pres">
+    <svg viewBox="0 0 240 336" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient color-interpolation="sRGB" id="pb${idx}" cx="50%" cy="50%">
+          <stop offset="0%" stop-color="#1a0e00"/><stop offset="100%" stop-color="#050200"/>
+        </radialGradient>
+        <filter color-interpolation-filters="sRGB" id="pbg${idx}"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect width="240" height="336" fill="url(#pb${idx})"/>
+      <!-- circuit trace bg pattern -->
+      <g stroke="#ff9a00" stroke-width="0.4" opacity="0.07" fill="none">
+        <path d="M0,60 h50 l10,10 h60 l10,-10 h60 h60"/>
+        <path d="M0,120 h30 l10,10 h80 l10,-10 h120"/>
+        <path d="M0,180 h70 l10,-10 h40 l10,10 h110"/>
+        <path d="M0,240 h20 l10,10 h100 l10,-10 h100"/>
+        <path d="M0,300 h60 l10,-10 h60 l10,10 h110"/>
+        <path d="M60,0 v60 l10,10 v60 l-10,10 v206"/>
+        <path d="M140,0 v40 l10,10 v80 l-10,10 v196"/>
+        <circle cx="70" cy="70" r="3"/><circle cx="150" cy="50" r="3"/>
+        <circle cx="80" cy="130" r="3"/><circle cx="130" cy="190" r="3"/>
+      </g>
+      <!-- central warning/timer design -->
+      <g transform="translate(120,168)" filter="url(#pbg${idx})">
+        <!-- outer ring -->
+        <circle cx="0" cy="0" r="72" fill="none" stroke="#ff9a00" stroke-width="0.7" opacity="0.35"/>
+        <!-- dashed countdown ring -->
+        <circle cx="0" cy="0" r="64" fill="none" stroke="#ff9a00" stroke-width="1.2" opacity="0.25" stroke-dasharray="8,6"/>
+        <!-- inner hex -->
+        <polygon points="0,-50 43,-25 43,25 0,50 -43,25 -43,-25"
+          fill="#0e0600" stroke="#ff9a00" stroke-width="0.8" opacity="0.5"/>
+        <!-- warning triangle -->
+        <polygon points="0,-36 32,18 -32,18"
+          fill="#1e0800" stroke="#ff9a00" stroke-width="1.3" stroke-linejoin="round" opacity="0.85"/>
+        <!-- exclamation -->
+        <rect x="-3.5" y="-22" width="7" height="22" rx="2" fill="#ff9a00"/>
+        <circle cx="0" cy="8" r="4" fill="#ff9a00"/>
+        <!-- tick marks on outer ring -->
+        ${Array.from({length:12},(_,k)=>{const a=k*30*Math.PI/180; return`<line x1="${Math.cos(a)*66}" y1="${Math.sin(a)*66}" x2="${Math.cos(a)*72}" y2="${Math.sin(a)*72}" stroke="#ff9a00" stroke-width="1" opacity="0.4"/>`;}).join('')}
+      </g>
+      <!-- label -->
+      <text x="120" y="284" font-family="'Orbitron',monospace" font-size="9" fill="#ff9a00"
+        opacity="0.45" text-anchor="middle" letter-spacing="3">KARTA TLAKU</text>
+      <text x="120" y="298" font-family="'Orbitron',monospace" font-size="6.5" fill="#ff9a00"
+        opacity="0.25" text-anchor="middle" letter-spacing="2">PRIORITY HAGALAZ</text>
+      <!-- border decoration -->
+      <rect x="2" y="2" width="236" height="332" rx="6" fill="none" stroke="#3a1e00" stroke-width="1.5"/>
+    </svg>
+  </div>`;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   PAGE ASSEMBLY
+════════════════════════════════════════════════════════════════ */
+const CARDS_PER_PAGE = 9;
+
+function fillPage(containerId, cards, renderFn, mirror=false){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  let page = container;
+  // If container is itself a page (single page):
+  if(!container.classList.contains('page')){
+    // It's a multi-page container
+    let globalIdx = 0;
+    for(let start=0; start<cards.length; start+=CARDS_PER_PAGE){
+      const slice = cards.slice(start, start+CARDS_PER_PAGE);
+      // Mirror every row of 3 for back pages (duplex printing)
+      let orderedSlice = slice;
+      if(mirror){
+        orderedSlice = [];
+        for(let r=0; r<Math.ceil(slice.length/3); r++){
+          const row = slice.slice(r*3, r*3+3);
+          orderedSlice.push(...row.reverse());
+        }
+      }
+      const pg = document.createElement('div');
+      pg.className = 'page';
+      pg.innerHTML = orderedSlice.map((c,j)=>renderFn(c, globalIdx++)).join('');
+      container.appendChild(pg);
+    }
+  } else {
+    // Single page
+    cards.forEach((c,j)=>{
+      container.insertAdjacentHTML('beforeend', renderFn(c,j));
+    });
+  }
+}
+
+function fillBackPage(containerId, count, renderFn){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  let idx = 0;
+  for(let start=0; start<count; start+=CARDS_PER_PAGE){
+    const pg = document.createElement('div');
+    pg.className = 'page';
+    const pageCount = Math.min(CARDS_PER_PAGE, count-start);
+    // Create dummy array for backs
+    const backs = Array.from({length: pageCount},(_,j)=>idx+j);
+    // For mirror: reverse each row of 3
+    const orderedBacks = [];
+    for(let r=0; r<Math.ceil(backs.length/3); r++){
+      const row = backs.slice(r*3, r*3+3);
+      orderedBacks.push(...row.reverse());
+    }
+    pg.innerHTML = orderedBacks.map(i=>renderFn(i)).join('');
+    container.appendChild(pg);
+    idx += pageCount;
+  }
+}
+
+/* ─── INIT ───────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', ()=>{
+
+  // Behavior card fronts (single page)
+  const behFrontPage = document.getElementById('pg-beh-front');
+  BEHAVIOR_CARDS.forEach((c,i)=>{
+    behFrontPage.insertAdjacentHTML('beforeend', renderBehCard(c, i));
+  });
+
+  // Behavior card backs (single page, mirrored rows)
+  const behBackPage = document.getElementById('pg-beh-back');
+  // Mirror rows of 3: [A,B,C] → [C,B,A]
+  const behMirrored = [];
+  for(let r=0; r<Math.ceil(BEHAVIOR_CARDS.length/3); r++){
+    const row = BEHAVIOR_CARDS.slice(r*3, r*3+3);
+    behMirrored.push(...row.map((_,j)=>j).reverse());
+  }
+  behMirrored.forEach(i=>{
+    behBackPage.insertAdjacentHTML('beforeend', renderBehBack(i));
+  });
+
+  // Pressure fronts (multiple pages)
+  const presFrontContainer = document.getElementById('pg-pres-front-container');
+  for(let start=0; start<PRESSURE_CARDS.length; start+=CARDS_PER_PAGE){
+    const slice = PRESSURE_CARDS.slice(start, start+CARDS_PER_PAGE);
+    const pg = document.createElement('div');
+    pg.className = 'page';
+    pg.innerHTML = slice.map((c,j)=>renderPresCard(c, start+j)).join('');
+    presFrontContainer.appendChild(pg);
+  }
+
+  // Pressure backs (multiple pages, mirrored)
+  const presBackContainer = document.getElementById('pg-pres-back-container');
+  let backIdx = 0;
+  for(let start=0; start<PRESSURE_CARDS.length; start+=CARDS_PER_PAGE){
+    const count = Math.min(CARDS_PER_PAGE, PRESSURE_CARDS.length-start);
+    const indices = Array.from({length:count},(_,j)=>start+j);
+    // Mirror rows
+    const mirrored = [];
+    for(let r=0; r<Math.ceil(indices.length/3); r++){
+      const row = indices.slice(r*3, r*3+3);
+      mirrored.push(...row.reverse());
+    }
+    const pg = document.createElement('div');
+    pg.className = 'page';
+    pg.innerHTML = mirrored.map(i=>renderPresBack(i)).join('');
+    presBackContainer.appendChild(pg);
+  }
+
+});
+</script>
+</body>
+</html>
